@@ -732,26 +732,83 @@
 
     <script>
         const companies = [
-            { name: "Airbnb", batch: "YC W08", pitch: "A website where people can rent out air mattresses in their apartment to strangers", context: "Rejected by 7 investors before YC", outcome: "IPO'd at $47B, now worth $80B+", valuation: 80, emoji: "🏠" },
-            { name: "Stripe", batch: "YC S09", pitch: "7 lines of code to accept payments on your website", context: "Founded by two Irish teenagers", outcome: "Valued at $95B, processes $1T+ annually", valuation: 95, emoji: "💳" },
-            { name: "Dropbox", batch: "YC S07", pitch: "Sync files across your computers automatically", context: "Steve Jobs tried to buy them for $800M", outcome: "IPO'd at $12B, still public", valuation: 12, emoji: "📦" },
-            { name: "DoorDash", batch: "YC S13", pitch: "Get restaurant food delivered to your door", context: "Founders personally delivered orders in Palo Alto", outcome: "IPO'd at $72B market cap", valuation: 72, emoji: "🍔" },
-            { name: "Coinbase", batch: "YC S12", pitch: "Buy and sell Bitcoin easily", context: "Applied as a solo founder", outcome: "IPO'd at $86B, first major crypto exchange to go public", valuation: 86, emoji: "₿" },
-            { name: "Instacart", batch: "YC S12", pitch: "Get groceries delivered from local stores in an hour", context: "Founder was frustrated with Amazon Fresh delivery times", outcome: "IPO'd in 2023, valued at $10B+", valuation: 10, emoji: "🛒" },
-            { name: "Twitch", batch: "YC W07 (as Justin.tv)", pitch: "Watch other people play video games live", context: "Started as a 24/7 lifecasting site", outcome: "Sold to Amazon for $970M", valuation: 15, emoji: "🎮" },
-            { name: "Reddit", batch: "YC S05", pitch: "The front page of the internet", context: "First ever YC batch", outcome: "IPO'd in 2024, valued at $10B+", valuation: 10, emoji: "👽" },
-            { name: "Cruise", batch: "YC W14", pitch: "A kit that turns any car into a self-driving car", context: "Pivoted from a $10K aftermarket kit", outcome: "Acquired by GM for $1B+, later valued at $30B", valuation: 30, emoji: "🚗" },
-            { name: "Rappi", batch: "YC W16", pitch: "Order anything and get it delivered in Latin America", context: "Started in Colombia", outcome: "Valued at $5.25B", valuation: 5, emoji: "🛵" },
-            { name: "Brex", batch: "YC W17", pitch: "Corporate credit cards for startups with no personal guarantee", context: "Founders were 21-year-old Brazilian immigrants", outcome: "Valued at $12B+", valuation: 12, emoji: "💼" },
-            { name: "Ginkgo Bioworks", batch: "YC S14", pitch: "A platform for programming cells like computers", context: "Founders met in a synthetic biology PhD program", outcome: "SPAC'd at $15B valuation", valuation: 15, emoji: "🧬" },
-            { name: "Zapier", batch: "YC S12", pitch: "Connect your web apps and automate workflows without code", context: "Fully remote from day one", outcome: "Profitable, $5B+ valuation", valuation: 5, emoji: "⚡" },
-            { name: "PagerDuty", batch: "YC S10", pitch: "Wake up engineers when their servers go down", context: "Built to solve on-call nightmares", outcome: "IPO'd at $1.8B", valuation: 2, emoji: "📟" },
-            { name: "Gusto", batch: "YC W12 (as ZenPayroll)", pitch: "Payroll software that doesn't make you want to cry", context: "Rebranded from ZenPayroll", outcome: "Valued at $10B+", valuation: 10, emoji: "💰" },
-            { name: "Webflow", batch: "YC W13", pitch: "Build professional websites without writing code", context: "Rejected by YC twice before acceptance", outcome: "Valued at $4B", valuation: 4, emoji: "🌐" },
-            { name: "GitLab", batch: "YC W15", pitch: "Open source alternative to GitHub", context: "Started as an open source project in Ukraine", outcome: "IPO'd at $11B", valuation: 11, emoji: "🦊" },
-            { name: "Segment", batch: "YC S11", pitch: "One API to collect customer data and send it anywhere", context: "Pivoted 3 times before finding PMF", outcome: "Acquired by Twilio for $3.2B", valuation: 3, emoji: "📊" },
-            { name: "Faire", batch: "YC W17", pitch: "Wholesale marketplace connecting retailers with brands", context: "Founded by ex-Square employees", outcome: "Valued at $12.4B", valuation: 12, emoji: "🏪" },
-            { name: "Flexport", batch: "YC W14", pitch: "Software to manage freight shipping and customs", context: "Founder had zero logistics experience", outcome: "Valued at $8B", valuation: 8, emoji: "🚢" }
+            // The Big Wins - Household Names
+            { name: "Airbnb", batch: "YC W08", pitch: "A website where people can rent out air mattresses in their apartment to strangers", context: "Rejected by 7 investors before YC. Sold Obama O's cereal to survive.", outcome: "IPO'd at $47B in 2020, now worth $80B+", valuation: 80, emoji: "🏠" },
+            { name: "Stripe", batch: "YC S09", pitch: "7 lines of code to accept payments on your website", context: "Founded by two Irish teenagers (19 and 21)", outcome: "Valued at $95B in 2021, processes $1T+ annually", valuation: 95, emoji: "💳" },
+            { name: "Dropbox", batch: "YC S07", pitch: "Sync files across your computers automatically", context: "Steve Jobs tried to acquire them for $800M", outcome: "IPO'd at $12B in 2018, still public", valuation: 12, emoji: "📦" },
+            { name: "DoorDash", batch: "YC S13", pitch: "Get restaurant food delivered to your door in under an hour", context: "Founders personally delivered orders in Palo Alto", outcome: "IPO'd at $72B market cap in 2020", valuation: 72, emoji: "🍔" },
+            { name: "Coinbase", batch: "YC S12", pitch: "The easiest way to buy and sell Bitcoin", context: "Applied as a solo founder. Bitcoin was at $10.", outcome: "Direct listed at $86B in 2021, first major crypto IPO", valuation: 86, emoji: "₿" },
+            { name: "Instacart", batch: "YC S12", pitch: "Get groceries delivered from local stores in an hour", context: "Founder delivered a 6-pack of beer to get a YC meeting", outcome: "IPO'd in 2023 at $10B valuation", valuation: 10, emoji: "🛒" },
+            { name: "Twitch", batch: "YC W07", pitch: "Watch other people play video games live on the internet", context: "Started as Justin.tv - 24/7 lifecasting", outcome: "Sold to Amazon for $970M in 2014", valuation: 15, emoji: "🎮" },
+            { name: "Reddit", batch: "YC S05", pitch: "The front page of the internet - user-submitted links", context: "One of the first YC batch companies ever", outcome: "IPO'd in 2024 at $10B+", valuation: 10, emoji: "👽" },
+            
+            // Autonomous & Deep Tech
+            { name: "Cruise", batch: "YC W14", pitch: "A kit that turns any car into a self-driving car", context: "Pivoted from a $10K aftermarket kit to full autonomy", outcome: "Acquired by GM for $1B+, later valued at $30B", valuation: 30, emoji: "🚗" },
+            { name: "Ginkgo Bioworks", batch: "YC S14", pitch: "A platform for programming cells like you program computers", context: "Founders met in a synthetic biology PhD program at MIT", outcome: "SPAC'd at $15B valuation in 2021", valuation: 15, emoji: "🧬" },
+            { name: "Scale AI", batch: "YC S16", pitch: "High-quality training data for machine learning models", context: "Founded by a 19-year-old MIT dropout", outcome: "Valued at $14B+, powers most major AI companies", valuation: 14, emoji: "🤖" },
+            { name: "Helion Energy", batch: "YC W14", pitch: "Building the world's first commercial fusion power plant", context: "Working on limitless clean energy", outcome: "Valued at $3B+, Microsoft deal for fusion power by 2028", valuation: 3, emoji: "⚛️" },
+            
+            // Fintech Giants
+            { name: "Brex", batch: "YC W17", pitch: "Corporate credit cards for startups with no personal guarantee", context: "Founders were 21-year-old Brazilian immigrants", outcome: "Valued at $12B+ in 2022", valuation: 12, emoji: "💼" },
+            { name: "Gusto", batch: "YC W12", pitch: "Payroll software that doesn't make you want to cry", context: "Started as ZenPayroll, rebranded later", outcome: "Valued at $10B+ in 2021", valuation: 10, emoji: "💰" },
+            { name: "Deel", batch: "YC W19", pitch: "Hire anyone, anywhere in the world, in minutes", context: "Built for the remote work revolution", outcome: "Valued at $12B+, $500M+ ARR", valuation: 12, emoji: "🌍" },
+            { name: "Mercury", batch: "YC W19", pitch: "The bank account every startup deserves", context: "Banking designed specifically for startups", outcome: "Valued at $1.6B+, used by 100K+ startups", valuation: 2, emoji: "🏦" },
+            { name: "Pipe", batch: "YC S19", pitch: "Trade your recurring revenue for upfront capital", context: "Turn SaaS subscriptions into instant cash", outcome: "Valued at $2B at peak", valuation: 2, emoji: "💵" },
+            
+            // Developer Tools & Infrastructure
+            { name: "GitLab", batch: "YC W15", pitch: "Open source alternative to GitHub that you can self-host", context: "Started as an open source project in Ukraine", outcome: "IPO'd at $11B in 2021", valuation: 11, emoji: "🦊" },
+            { name: "Segment", batch: "YC S11", pitch: "One API to collect customer data and send it anywhere", context: "Pivoted 3 times before finding product-market fit", outcome: "Acquired by Twilio for $3.2B in 2020", valuation: 3, emoji: "📊" },
+            { name: "PagerDuty", batch: "YC S10", pitch: "Wake up engineers when their servers go down", context: "Built to solve on-call nightmares", outcome: "IPO'd at $1.8B in 2019", valuation: 2, emoji: "📟" },
+            { name: "Zapier", batch: "YC S12", pitch: "Connect your web apps and automate workflows without code", context: "Fully remote from day one, never raised Series A", outcome: "Profitable, valued at $5B+", valuation: 5, emoji: "⚡" },
+            { name: "Retool", batch: "YC W17", pitch: "Build internal tools 10x faster with drag-and-drop", context: "Every company needs internal tools", outcome: "Valued at $3.2B in 2022", valuation: 3, emoji: "🔧" },
+            { name: "Algolia", batch: "YC W14", pitch: "Search-as-a-service for websites and apps", context: "Makes any website searchable in minutes", outcome: "Valued at $2.25B in 2021", valuation: 2, emoji: "🔍" },
+            
+            // E-commerce & Marketplaces
+            { name: "Faire", batch: "YC W17", pitch: "Wholesale marketplace connecting small retailers with brands", context: "Founded by ex-Square employees", outcome: "Valued at $12.4B at peak", valuation: 12, emoji: "🏪" },
+            { name: "Webflow", batch: "YC W13", pitch: "Build professional websites without writing code", context: "Rejected by YC twice before acceptance", outcome: "Valued at $4B in 2022", valuation: 4, emoji: "🌐" },
+            { name: "OpenSea", batch: "YC W18", pitch: "A peer-to-peer marketplace for crypto collectibles", context: "Inspired by CryptoKitties", outcome: "Valued at $13.3B at peak in 2022", valuation: 13, emoji: "🖼️" },
+            { name: "Whatnot", batch: "YC W20", pitch: "Live auctions for collectibles - like QVC meets Twitch", context: "Started with Pokemon cards and Funko Pops", outcome: "Valued at $3.7B in 2022", valuation: 4, emoji: "🎴" },
+            { name: "Goat", batch: "YC W15", pitch: "The safest way to buy and sell sneakers", context: "Guarantees authenticity of every sneaker", outcome: "Valued at $3.7B in 2021", valuation: 4, emoji: "👟" },
+            
+            // International Expansion
+            { name: "Rappi", batch: "YC W16", pitch: "Order anything and get it delivered in Latin America", context: "Started in Colombia, now across LatAm", outcome: "Valued at $5.25B", valuation: 5, emoji: "🛵" },
+            { name: "Razorpay", batch: "YC W15", pitch: "Accept payments for your business in India", context: "India's Stripe", outcome: "Valued at $7.5B in 2021", valuation: 8, emoji: "🇮🇳" },
+            { name: "Meesho", batch: "YC S16", pitch: "Let anyone become a reseller through WhatsApp", context: "Social commerce for India", outcome: "Valued at $4.9B in 2022", valuation: 5, emoji: "💬" },
+            { name: "Zepto", batch: "YC W21", pitch: "Groceries delivered in 10 minutes in India", context: "Founded by two 19-year-old Stanford dropouts", outcome: "Valued at $3.6B in 2024", valuation: 4, emoji: "⚡" },
+            { name: "Groww", batch: "YC W18", pitch: "Make investing easy for everyone in India", context: "Robinhood for India", outcome: "Valued at $3B in 2022", valuation: 3, emoji: "📈" },
+            
+            // Logistics & Supply Chain  
+            { name: "Flexport", batch: "YC W14", pitch: "Software to manage freight shipping and customs", context: "Founder had zero logistics experience", outcome: "Valued at $8B at peak", valuation: 8, emoji: "🚢" },
+            { name: "Convoy", batch: "YC W15", pitch: "Uber for trucking - matching shippers with carriers", context: "Founded by ex-Amazon executives", outcome: "Valued at $3.8B at peak (shut down 2023)", valuation: 0, emoji: "🚛" },
+            { name: "ShipBob", batch: "YC S14", pitch: "Fulfillment for e-commerce - like having your own warehouse", context: "Compete with Amazon fulfillment", outcome: "Valued at $1B+ in 2021", valuation: 1, emoji: "📦" },
+            
+            // HR & Workplace
+            { name: "Checkr", batch: "YC S14", pitch: "Fast, accurate background checks via API", context: "Background checks were broken before this", outcome: "Valued at $5B in 2022", valuation: 5, emoji: "✅" },
+            { name: "Lattice", batch: "YC W16", pitch: "Performance management software that employees love", context: "Makes performance reviews not terrible", outcome: "Valued at $3B in 2022", valuation: 3, emoji: "📋" },
+            { name: "Vanta", batch: "YC W18", pitch: "Automate your security compliance (SOC 2, HIPAA)", context: "Security compliance used to take months", outcome: "Valued at $2.45B in 2024", valuation: 2, emoji: "🔒" },
+            { name: "Ironclad", batch: "YC S15", pitch: "Digital contracting for the world's most innovative companies", context: "Contracts are the lifeblood of business", outcome: "Valued at $3.2B in 2022", valuation: 3, emoji: "📝" },
+            { name: "Carta", batch: "YC W14", pitch: "Cap table and equity management made simple", context: "Every startup needs to manage their equity", outcome: "Valued at $7.4B at peak", valuation: 7, emoji: "📄" },
+            
+            // Consumer & Social
+            { name: "Podium", batch: "YC W16", pitch: "Help local businesses get more reviews and leads", context: "Text-based customer interactions", outcome: "Valued at $3B+ in 2021", valuation: 3, emoji: "⭐" },
+            { name: "Sendbird", batch: "YC W16", pitch: "Chat API - add messaging to any app in minutes", context: "Powers chat for apps like DoorDash, Yahoo", outcome: "Valued at $1B+ in 2021", valuation: 1, emoji: "💬" },
+            { name: "Amplitude", batch: "YC W12", pitch: "Product analytics that helps you understand user behavior", context: "Know what users do in your app", outcome: "IPO'd in 2021 at $5B+", valuation: 5, emoji: "📱" },
+            { name: "Weave", batch: "YC W14", pitch: "All-in-one communication platform for small businesses", context: "Phone, text, email for dentists and healthcare", outcome: "IPO'd in 2021 at $1.5B", valuation: 2, emoji: "📞" },
+            
+            // Health & Biotech
+            { name: "Mattermost", batch: "YC S12", pitch: "Slack for enterprises that need security and privacy", context: "Open source, self-hosted chat", outcome: "Valued at $1.5B", valuation: 2, emoji: "💼" },
+            { name: "Freenome", batch: "YC S14", pitch: "Detect cancer early with a simple blood test", context: "AI-powered cancer screening", outcome: "Valued at $2.5B in 2022", valuation: 3, emoji: "🩸" },
+            { name: "Benchling", batch: "YC W12", pitch: "Cloud platform for life sciences R&D", context: "Lab notebook and data platform for biotech", outcome: "Valued at $6.1B in 2021", valuation: 6, emoji: "🧪" },
+            
+            // More Success Stories
+            { name: "Monzo", batch: "YC S16", pitch: "The bank of the future - built for your smartphone", context: "UK's leading digital bank", outcome: "Valued at $5B in 2024", valuation: 5, emoji: "🏧" },
+            { name: "Wufoo", batch: "YC W06", pitch: "Create beautiful online forms without coding", context: "One of the earliest YC companies", outcome: "Acquired by SurveyMonkey for $35M (early exit!)", valuation: 0, emoji: "📋" },
+            { name: "Justin.tv", batch: "YC W07", pitch: "Broadcast your life 24/7 on the internet", context: "Pivoted to become Twitch", outcome: "Became Twitch, sold to Amazon for $970M", valuation: 15, emoji: "📹" },
+            { name: "Scribd", batch: "YC S06", pitch: "YouTube for documents - share and discover written works", context: "The world's digital library", outcome: "Valued at $1B+, profitable", valuation: 1, emoji: "📚" },
+            { name: "Machine Zone", batch: "YC W08", pitch: "Mobile games that bring people together", context: "Made Game of War, Mobile Strike", outcome: "Sold for $600M in 2020", valuation: 1, emoji: "🎮" },
+            { name: "Gumroad", batch: "YC S11", pitch: "Sell digital products directly to your audience", context: "For creators selling ebooks, courses, art", outcome: "Profitable, ~$10M ARR", valuation: 0, emoji: "🛍️" },
+            { name: "Lambda School", batch: "YC S17", pitch: "Learn to code with no upfront tuition", context: "Pay when you get a job (Income Share Agreement)", outcome: "Rebranded to BloomTech, valued at $150M+", valuation: 0, emoji: "👨‍💻" },
+            { name: "Optimizely", batch: "YC W10", pitch: "A/B testing made easy - test any website change", context: "Built by ex-Obama campaign data team", outcome: "Acquired by Episerver for $600M", valuation: 1, emoji: "📊" }
         ];
 
         const STARTING_BUDGET = 5;

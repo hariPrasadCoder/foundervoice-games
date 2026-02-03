@@ -510,31 +510,127 @@
 
     <script>
         const questions = [
-            { emoji: "🏠", name: "Airbnb", stage: "Seed (2009)", context: "Just got into YC. Selling cereal boxes to stay alive. 10,000 users.", answer: "$2.5M", options: ["$600K", "$2.5M", "$10M", "$25M"], explanation: "YC invested at ~$2.5M valuation. They were still selling Obama O's cereal to pay rent!" },
-            { emoji: "🏠", name: "Airbnb", stage: "Series A (2010)", context: "21,000 guests that year. Growing fast but still tiny.", answer: "$7.2M", options: ["$2M", "$7.2M", "$25M", "$60M"], explanation: "Sequoia led the Series A at $7.2M. Hard to imagine now!" },
-            { emoji: "🏠", name: "Airbnb", stage: "IPO (2020)", context: "Survived COVID collapse. Going public in December.", answer: "$47B", options: ["$18B", "$31B", "$47B", "$75B"], explanation: "Airbnb IPO'd at $47B, popping to $100B+ on day one." },
-            { emoji: "💳", name: "Stripe", stage: "Seed (2010)", context: "Two Irish teenagers with 7 lines of code for payments.", answer: "$3.4M", options: ["$1M", "$3.4M", "$8M", "$20M"], explanation: "YC + angels invested at $3.4M. Patrick was 21, John was 19." },
-            { emoji: "💳", name: "Stripe", stage: "Series A (2012)", context: "Processing millions. Peter Thiel leading the round.", answer: "$100M", options: ["$20M", "$50M", "$100M", "$250M"], explanation: "Thiel led at $100M valuation. Already 100x from seed!" },
-            { emoji: "💳", name: "Stripe", stage: "Peak Valuation (2021)", context: "Processing over $640B annually. Largest private fintech.", answer: "$95B", options: ["$36B", "$65B", "$95B", "$150B"], explanation: "Hit $95B in March 2021, making it the most valuable US startup ever at the time." },
-            { emoji: "📦", name: "Dropbox", stage: "Seed (2007)", context: "Just Drew and a demo video. No product yet.", answer: "$4M", options: ["$1.2M", "$4M", "$12M", "$25M"], explanation: "YC batch S07. The famous demo video got them their seed." },
-            { emoji: "📦", name: "Dropbox", stage: "Series B (2011)", context: "50M users. Steve Jobs tried to acquire them.", answer: "$4B", options: ["$500M", "$1.5B", "$4B", "$8B"], explanation: "Turned down Jobs' acquisition offer. Raised at $4B instead." },
-            { emoji: "🍔", name: "DoorDash", stage: "Seed (2013)", context: "Stanford students personally delivering food in Palo Alto.", answer: "$2.4M", options: ["$800K", "$2.4M", "$6M", "$15M"], explanation: "YC S13. Founders did 100+ deliveries themselves to learn the business." },
-            { emoji: "🍔", name: "DoorDash", stage: "Series A (2014)", context: "Expanded to a few cities. Competing with many others.", answer: "$72M", options: ["$25M", "$72M", "$150M", "$300M"], explanation: "Khosla Ventures led at $72M. Still seemed like a crowded market." },
-            { emoji: "🍔", name: "DoorDash", stage: "IPO (2020)", context: "COVID boosted delivery. Going public.", answer: "$72B", options: ["$25B", "$42B", "$72B", "$95B"], explanation: "IPO'd at $72B market cap. 1000x from seed in 7 years!" },
-            { emoji: "₿", name: "Coinbase", stage: "Seed (2012)", context: "Solo founder Brian Armstrong. Bitcoin at $10.", answer: "$2M", options: ["$500K", "$2M", "$8M", "$20M"], explanation: "YC S12. Bitcoin was trading around $10 when they started." },
-            { emoji: "₿", name: "Coinbase", stage: "Series C (2015)", context: "1M users. Bitcoin crashed to $200.", answer: "$500M", options: ["$100M", "$500M", "$1B", "$3B"], explanation: "Raised at $500M during the crypto winter. Believers only." },
-            { emoji: "₿", name: "Coinbase", stage: "Direct Listing (2021)", context: "56M users. Bitcoin at $60K. First crypto company to go public.", answer: "$86B", options: ["$35B", "$65B", "$86B", "$120B"], explanation: "Direct listed at $86B. Briefly hit $100B+ on opening day." },
-            { emoji: "👽", name: "Reddit", stage: "Seed (2005)", context: "First ever YC batch. Just Alexis and Steve.", answer: "$400K", options: ["$100K", "$400K", "$1.5M", "$5M"], explanation: "One of the first YC investments ever. $12K for 6%." },
-            { emoji: "👽", name: "Reddit", stage: "Acquired (2006)", context: "Condé Nast buying the 'front page of the internet'", answer: "$10M", options: ["$3M", "$10M", "$30M", "$75M"], explanation: "Sold to Condé Nast for ~$10M. Seemed huge at the time!" },
-            { emoji: "👽", name: "Reddit", stage: "IPO (2024)", context: "Going public after 19 years. 52M daily active users.", answer: "$10B", options: ["$3B", "$6.5B", "$10B", "$15B"], explanation: "Finally IPO'd at ~$10B valuation in March 2024." },
-            { emoji: "🎮", name: "Twitch", stage: "Seed as Justin.tv (2007)", context: "24/7 lifecasting. Justin broadcasting his whole life.", answer: "$2M", options: ["$500K", "$2M", "$8M", "$15M"], explanation: "Started as Justin.tv before pivoting to game streaming." },
-            { emoji: "🎮", name: "Twitch", stage: "Acquisition (2014)", context: "Amazon buying the game streaming platform.", answer: "$970M", options: ["$300M", "$600M", "$970M", "$1.5B"], explanation: "Amazon bought Twitch for $970M. Google had offered $1B but deal fell through." },
-            { emoji: "🛒", name: "Instacart", stage: "Seed (2012)", context: "YC S12. Frustrated with Amazon Fresh delivery times.", answer: "$2.4M", options: ["$800K", "$2.4M", "$8M", "$20M"], explanation: "Apoorva Mehta's 20th startup attempt. Finally worked!" },
-            { emoji: "🛒", name: "Instacart", stage: "Peak (2021)", context: "COVID grocery delivery boom.", answer: "$39B", options: ["$13B", "$24B", "$39B", "$55B"], explanation: "Hit $39B at peak COVID. Dropped significantly after." },
-            { emoji: "💼", name: "Brex", stage: "Seed (2017)", context: "Two 21-year-old Brazilians. Corporate cards for startups.", answer: "$7M", options: ["$2M", "$7M", "$20M", "$50M"], explanation: "YC W17. Henrique and Pedro had already sold a company in Brazil." },
-            { emoji: "💼", name: "Brex", stage: "Peak (2022)", context: "Serving thousands of startups. Expanding to all businesses.", answer: "$12B", options: ["$3B", "$7.5B", "$12B", "$20B"], explanation: "Hit $12B valuation before the market correction." },
+            // AIRBNB - The iconic story
+            { emoji: "🏠", name: "Airbnb", stage: "Seed (2009)", context: "Just got into YC. Selling Obama O's cereal to survive. About 10,000 users.", answer: "$2.5M", options: ["$600K", "$2.5M", "$10M", "$25M"], explanation: "YC invested at ~$2.5M valuation. They literally sold cereal boxes to pay rent!" },
+            { emoji: "🏠", name: "Airbnb", stage: "Series A (2010)", context: "21,000 guests that year. Growing fast but still tiny.", answer: "$7.2M", options: ["$2M", "$7.2M", "$25M", "$60M"], explanation: "Sequoia led at $7.2M. Investors still skeptical about 'strangers sleeping in your home'." },
+            { emoji: "🏠", name: "Airbnb", stage: "Series B (2011)", context: "Now in 89 countries. 2M nights booked total.", answer: "$1.3B", options: ["$200M", "$600M", "$1.3B", "$3B"], explanation: "Became a unicorn! Andreessen Horowitz led at $1.3B valuation." },
+            { emoji: "🏠", name: "Airbnb", stage: "IPO (2020)", context: "Survived COVID collapse. Going public in December.", answer: "$47B", options: ["$18B", "$31B", "$47B", "$75B"], explanation: "IPO'd at $47B, doubled to $100B+ on day one. One of the biggest IPO pops ever." },
+            
+            // STRIPE - The payments giant
+            { emoji: "💳", name: "Stripe", stage: "Seed (2010)", context: "Two Irish teenagers with 7 lines of code for payments.", answer: "$3.4M", options: ["$1M", "$3.4M", "$8M", "$20M"], explanation: "Patrick was 21, John was 19. YC + angels invested at $3.4M." },
+            { emoji: "💳", name: "Stripe", stage: "Series A (2012)", context: "Processing millions. Peter Thiel leading the round.", answer: "$100M", options: ["$20M", "$50M", "$100M", "$250M"], explanation: "Thiel led at $100M. Already 30x from seed in 2 years!" },
+            { emoji: "💳", name: "Stripe", stage: "Series D (2016)", context: "Processing billions. Used by Twitter, Shopify, Lyft.", answer: "$9B", options: ["$3B", "$5B", "$9B", "$15B"], explanation: "Hit $9B as the clear leader in online payments infrastructure." },
+            { emoji: "💳", name: "Stripe", stage: "Peak (2021)", context: "Processing over $640B annually. Largest private fintech.", answer: "$95B", options: ["$36B", "$65B", "$95B", "$150B"], explanation: "Most valuable US startup ever at the time. 28,000x from seed!" },
+            
+            // DROPBOX - The file sync pioneer
+            { emoji: "📦", name: "Dropbox", stage: "Seed (2007)", context: "Just Drew and a demo video. No working product yet.", answer: "$4M", options: ["$1.2M", "$4M", "$12M", "$25M"], explanation: "YC S07. The famous 'demo video' got 75K signups overnight!" },
+            { emoji: "📦", name: "Dropbox", stage: "Series A (2008)", context: "Growing fast. Steve Jobs called to discuss acquisition.", answer: "$25M", options: ["$8M", "$25M", "$60M", "$150M"], explanation: "Sequoia led. Jobs offered $800M to acquire - they said no!" },
+            { emoji: "📦", name: "Dropbox", stage: "Series B (2011)", context: "100M users. The 'it just works' file sync.", answer: "$4B", options: ["$500M", "$1.5B", "$4B", "$8B"], explanation: "Massive jump to $4B. Viral growth was incredible." },
+            { emoji: "📦", name: "Dropbox", stage: "IPO (2018)", context: "Going public after 11 years. 500M registered users.", answer: "$12B", options: ["$5B", "$8B", "$12B", "$18B"], explanation: "IPO'd at $12B. Solid but competition from Google, Microsoft was growing." },
+            
+            // DOORDASH - Food delivery wars
+            { emoji: "🍔", name: "DoorDash", stage: "Seed (2013)", context: "Stanford students personally delivering food in Palo Alto.", answer: "$2.4M", options: ["$800K", "$2.4M", "$6M", "$15M"], explanation: "YC S13. Founders did 100+ deliveries themselves to understand the business." },
+            { emoji: "🍔", name: "DoorDash", stage: "Series A (2014)", context: "Expanded to a few cities. Many competitors.", answer: "$72M", options: ["$25M", "$72M", "$150M", "$300M"], explanation: "Khosla Ventures led. Uber, Postmates, GrubHub all competing." },
+            { emoji: "🍔", name: "DoorDash", stage: "Series D (2018)", context: "Now #2 in delivery. SoftBank interested.", answer: "$1.4B", options: ["$400M", "$800M", "$1.4B", "$3B"], explanation: "Unicorn status! SoftBank's Vision Fund led the round." },
+            { emoji: "🍔", name: "DoorDash", stage: "IPO (2020)", context: "COVID boosted delivery. #1 in US market share.", answer: "$72B", options: ["$25B", "$42B", "$72B", "$95B"], explanation: "IPO'd at $72B. 30,000x from seed in 7 years! COVID was rocket fuel." },
+            
+            // COINBASE - Crypto exchange
+            { emoji: "₿", name: "Coinbase", stage: "Seed (2012)", context: "Solo founder Brian Armstrong. Bitcoin at ~$10.", answer: "$2M", options: ["$500K", "$2M", "$8M", "$20M"], explanation: "YC S12. Most investors thought Bitcoin was a joke back then." },
+            { emoji: "₿", name: "Coinbase", stage: "Series A (2013)", context: "Growing users. Bitcoin hit $1,000 for first time.", answer: "$25M", options: ["$5M", "$25M", "$75M", "$200M"], explanation: "Union Square Ventures led. Fred Wilson was a true believer." },
+            { emoji: "₿", name: "Coinbase", stage: "Series C (2015)", context: "1M users. But Bitcoin crashed to $200.", answer: "$500M", options: ["$100M", "$500M", "$1B", "$3B"], explanation: "Raised during crypto winter! Only true believers invested." },
+            { emoji: "₿", name: "Coinbase", stage: "Direct Listing (2021)", context: "56M users. Bitcoin at $60K. First major crypto IPO.", answer: "$86B", options: ["$35B", "$65B", "$86B", "$120B"], explanation: "Direct listed at $86B. Briefly $100B+ on day one. Historic!" },
+            
+            // REDDIT - The front page
+            { emoji: "👽", name: "Reddit", stage: "Seed (2005)", context: "First ever YC batch. Just Alexis and Steve.", answer: "$400K", options: ["$100K", "$400K", "$1.5M", "$5M"], explanation: "YC invested $12K for 6% = ~$200K valuation. Became $400K with angels." },
+            { emoji: "👽", name: "Reddit", stage: "Acquired by Condé Nast (2006)", context: "Sold to a media company after just 16 months.", answer: "$10M", options: ["$3M", "$10M", "$30M", "$75M"], explanation: "Sold for ~$10M. Seemed like a great outcome then!" },
+            { emoji: "👽", name: "Reddit", stage: "Series B (2014)", context: "Spun back out. 175M monthly users.", answer: "$500M", options: ["$150M", "$500M", "$1.2B", "$2B"], explanation: "Back as independent company at $500M. The comeback begins." },
+            { emoji: "👽", name: "Reddit", stage: "IPO (2024)", context: "Going public after 19 years. 52M daily active users.", answer: "$10B", options: ["$3B", "$6.5B", "$10B", "$15B"], explanation: "Finally IPO'd at ~$10B. 25,000x from seed!" },
+            
+            // TWITCH - Game streaming
+            { emoji: "🎮", name: "Twitch", stage: "Seed as Justin.tv (2007)", context: "24/7 lifecasting. Justin broadcasting his whole life.", answer: "$2M", options: ["$500K", "$2M", "$8M", "$15M"], explanation: "Started as Justin.tv before pivoting to gaming." },
+            { emoji: "🎮", name: "Twitch", stage: "Series A (2012)", context: "Pivoted to game streaming. 20M monthly viewers.", answer: "$15M", options: ["$5M", "$15M", "$40M", "$100M"], explanation: "Gaming pivot worked! Renamed to Twitch." },
+            { emoji: "🎮", name: "Twitch", stage: "Acquisition by Amazon (2014)", context: "Google almost bought them for $1B but deal fell through.", answer: "$970M", options: ["$300M", "$600M", "$970M", "$1.5B"], explanation: "Amazon swooped in at $970M. Google's loss!" },
+            
+            // INSTACART - Grocery delivery
+            { emoji: "🛒", name: "Instacart", stage: "Seed (2012)", context: "Founder delivered beer to a YC partner to get a meeting.", answer: "$2.4M", options: ["$800K", "$2.4M", "$8M", "$20M"], explanation: "Apoorva Mehta's 20th startup attempt! Used Instacart to deliver beer to YC." },
+            { emoji: "🛒", name: "Instacart", stage: "Series B (2014)", context: "Expanding cities. Whole Foods partnership.", answer: "$400M", options: ["$100M", "$400M", "$900M", "$1.5B"], explanation: "Kleiner Perkins led. Grocery delivery was hot." },
+            { emoji: "🛒", name: "Instacart", stage: "Peak COVID (2021)", context: "Demand exploded. Everyone ordering groceries.", answer: "$39B", options: ["$13B", "$24B", "$39B", "$55B"], explanation: "COVID rocket! But valuation dropped 75% by IPO." },
+            { emoji: "🛒", name: "Instacart", stage: "IPO (2023)", context: "Finally going public. Market normalized.", answer: "$10B", options: ["$5B", "$10B", "$18B", "$25B"], explanation: "IPO'd at $10B - down 75% from peak. Reality check." },
+            
+            // BREX - Corporate cards
+            { emoji: "💼", name: "Brex", stage: "Seed (2017)", context: "Two 21-year-old Brazilians. Already sold one company.", answer: "$7M", options: ["$2M", "$7M", "$20M", "$50M"], explanation: "YC W17. Henrique and Pedro were serial entrepreneurs at 21!" },
+            { emoji: "💼", name: "Brex", stage: "Series B (2018)", context: "Fastest to $1B revenue run rate ever at the time.", answer: "$1.1B", options: ["$300M", "$650M", "$1.1B", "$2B"], explanation: "Unicorn in 2 years! Record-breaking growth." },
+            { emoji: "💼", name: "Brex", stage: "Peak (2022)", context: "Expanding beyond startups to all businesses.", answer: "$12B", options: ["$3B", "$7.5B", "$12B", "$20B"], explanation: "Hit $12B before market correction forced cuts." },
+            
+            // SCALE AI - AI infrastructure
+            { emoji: "🤖", name: "Scale AI", stage: "Seed (2016)", context: "19-year-old MIT dropout. Data labeling for ML.", answer: "$4M", options: ["$1M", "$4M", "$12M", "$25M"], explanation: "YC S16. Alexandr Wang was one of youngest founders ever funded." },
+            { emoji: "🤖", name: "Scale AI", stage: "Series B (2019)", context: "Became the go-to for AI training data.", answer: "$1B", options: ["$250M", "$600M", "$1B", "$2B"], explanation: "Unicorn! Peter Thiel's Founders Fund led." },
+            { emoji: "🤖", name: "Scale AI", stage: "Series E (2024)", context: "Powers most major AI companies. Defense contracts.", answer: "$14B", options: ["$5B", "$8B", "$14B", "$22B"], explanation: "Critical AI infrastructure. Government + enterprise clients." },
+            
+            // DEEL - Global HR
+            { emoji: "🌍", name: "Deel", stage: "Seed (2019)", context: "Hire anyone, anywhere in the world legally.", answer: "$5M", options: ["$1.5M", "$5M", "$15M", "$30M"], explanation: "YC W19. Remote work was about to explode." },
+            { emoji: "🌍", name: "Deel", stage: "Series C (2021)", context: "Remote work boom. Companies hiring globally.", answer: "$1.25B", options: ["$300M", "$700M", "$1.25B", "$2.5B"], explanation: "Unicorn! Perfect timing with COVID remote shift." },
+            { emoji: "🌍", name: "Deel", stage: "Peak (2022)", context: "Fastest to $100M ARR ever. 5x in one year.", answer: "$12B", options: ["$4B", "$8B", "$12B", "$18B"], explanation: "Explosive growth! From $5M seed to $12B in 3 years." },
+            
+            // OPENAI - Via YC (technically W16 batch)
+            { emoji: "🧠", name: "OpenAI", stage: "Non-profit start (2015)", context: "Sam Altman, Elon Musk create AI safety lab.", answer: "$1B", options: ["$100M", "$500M", "$1B", "$3B"], explanation: "Started with $1B commitment from founders. Non-profit structure." },
+            { emoji: "🧠", name: "OpenAI", stage: "Microsoft Investment (2019)", context: "Partnership with Microsoft. Needs compute.", answer: "$10B", options: ["$3B", "$7B", "$10B", "$15B"], explanation: "Microsoft invested $1B at ~$10B valuation for exclusive cloud deal." },
+            { emoji: "🧠", name: "OpenAI", stage: "Post-ChatGPT (2023)", context: "ChatGPT changed everything. 100M users in 2 months.", answer: "$86B", options: ["$29B", "$50B", "$86B", "$120B"], explanation: "ChatGPT fastest growing app ever. Valuation exploded." },
+            
+            // GITLAB - DevOps platform
+            { emoji: "🦊", name: "GitLab", stage: "Seed (2015)", context: "Open source GitHub alternative. Started in Ukraine.", answer: "$12M", options: ["$3M", "$12M", "$30M", "$75M"], explanation: "YC W15. Dmitriy started it as a side project in Ukraine." },
+            { emoji: "🦊", name: "GitLab", stage: "Series B (2016)", context: "Growing fast. Competing with GitHub.", answer: "$100M", options: ["$35M", "$100M", "$250M", "$500M"], explanation: "August Capital led. DevOps market was heating up." },
+            { emoji: "🦊", name: "GitLab", stage: "IPO (2021)", context: "Going public. GitHub sold to Microsoft for $7.5B.", answer: "$11B", options: ["$4B", "$7B", "$11B", "$16B"], explanation: "IPO'd at $11B. Stayed independent while GitHub joined Microsoft." },
+            
+            // ZAPIER - No-code automation
             { emoji: "⚡", name: "Zapier", stage: "Seed (2012)", context: "YC S12. Connect apps without code. Fully remote.", answer: "$1.4M", options: ["$400K", "$1.4M", "$5M", "$12M"], explanation: "One of the few YC companies that never raised a Series A!" },
-            { emoji: "⚡", name: "Zapier", stage: "Current (2023)", context: "Profitable, 700 employees, still fully remote.", answer: "$5B", options: ["$1B", "$3B", "$5B", "$8B"], explanation: "Bootstrapped to $5B. Profitable and growing without VC pressure." }
+            { emoji: "⚡", name: "Zapier", stage: "Series A (Never happened)", context: "They skipped Series A. Went straight to profitability.", answer: "$0", options: ["$15M", "$35M", "$0", "$80M"], explanation: "Trick question! They NEVER raised a Series A. Bootstrapped to billions." },
+            { emoji: "⚡", name: "Zapier", stage: "Private Valuation (2021)", context: "Profitable for years. 700 employees, fully remote.", answer: "$5B", options: ["$1B", "$3B", "$5B", "$8B"], explanation: "Valued at $5B. Proof you don't need to raise forever!" },
+            
+            // OPENSEA - NFT marketplace
+            { emoji: "🖼️", name: "OpenSea", stage: "Seed (2018)", context: "Marketplace for CryptoKitties and other NFTs.", answer: "$2M", options: ["$500K", "$2M", "$8M", "$15M"], explanation: "YC W18. NFTs seemed like a niche hobby." },
+            { emoji: "🖼️", name: "OpenSea", stage: "Series A (2021)", context: "NFT boom! Beeple sold art for $69M.", answer: "$1.5B", options: ["$300M", "$800M", "$1.5B", "$3B"], explanation: "Unicorn overnight! $1.5B when NFTs exploded." },
+            { emoji: "🖼️", name: "OpenSea", stage: "Peak (2022)", context: "$2.7B daily volume. Everyone trading NFTs.", answer: "$13B", options: ["$5B", "$8B", "$13B", "$20B"], explanation: "Hit $13B at peak mania. Then volume dropped 99%." },
+            
+            // CRUISE - Self-driving
+            { emoji: "🚗", name: "Cruise", stage: "Seed (2014)", context: "Aftermarket kit to make any car self-driving.", answer: "$10M", options: ["$3M", "$10M", "$25M", "$50M"], explanation: "YC W14. Started with a $10K kit concept." },
+            { emoji: "🚗", name: "Cruise", stage: "Acquired by GM (2016)", context: "GM wants in on self-driving cars.", answer: "$1B", options: ["$200M", "$500M", "$1B", "$2B"], explanation: "GM bought for ~$1B. Only 2 years after founding!" },
+            { emoji: "🚗", name: "Cruise", stage: "Peak Investment (2021)", context: "Testing robotaxis in San Francisco.", answer: "$30B", options: ["$10B", "$19B", "$30B", "$45B"], explanation: "Hit $30B with Microsoft, Walmart investments. Now restructuring." },
+            
+            // GINKGO BIOWORKS - Synthetic biology
+            { emoji: "🧬", name: "Ginkgo Bioworks", stage: "Seed (2014)", context: "Program cells like computers. MIT spinout.", answer: "$10M", options: ["$3M", "$10M", "$25M", "$50M"], explanation: "YC S14. Founders met in synthetic biology PhD program." },
+            { emoji: "🧬", name: "Ginkgo Bioworks", stage: "Series C (2017)", context: "Building 'foundries' for cell programming.", answer: "$1.4B", options: ["$400M", "$800M", "$1.4B", "$2.5B"], explanation: "Unicorn! First biotech unicorn from YC." },
+            { emoji: "🧬", name: "Ginkgo Bioworks", stage: "SPAC (2021)", context: "Going public via SPAC merger.", answer: "$15B", options: ["$5B", "$10B", "$15B", "$25B"], explanation: "SPAC'd at $15B. Largest YC biotech exit at the time." },
+            
+            // FLEXPORT - Freight forwarding
+            { emoji: "🚢", name: "Flexport", stage: "Seed (2014)", context: "Software for freight shipping. Founder had no logistics experience.", answer: "$3M", options: ["$1M", "$3M", "$8M", "$15M"], explanation: "YC W14. Ryan learned logistics by doing it." },
+            { emoji: "🚢", name: "Flexport", stage: "Series D (2019)", context: "SoftBank Vision Fund wants in.", answer: "$3.2B", options: ["$1B", "$2B", "$3.2B", "$5B"], explanation: "SoftBank led at $3.2B. Global trade was booming." },
+            { emoji: "🚢", name: "Flexport", stage: "Peak (2022)", context: "Supply chain crisis made freight critical.", answer: "$8B", options: ["$3B", "$5B", "$8B", "$12B"], explanation: "Hit $8B as supply chains broke. Then market shifted." },
+            
+            // FAIRE - Wholesale marketplace
+            { emoji: "🏪", name: "Faire", stage: "Seed (2017)", context: "Wholesale marketplace. Ex-Square team.", answer: "$8M", options: ["$2M", "$8M", "$20M", "$40M"], explanation: "YC W17. Founded by ex-Square payments team." },
+            { emoji: "🏪", name: "Faire", stage: "Series D (2020)", context: "Helping local retailers compete with Amazon.", answer: "$2.5B", options: ["$800M", "$1.5B", "$2.5B", "$4B"], explanation: "Unicorn! Retailers loved the 60-day payment terms." },
+            { emoji: "🏪", name: "Faire", stage: "Peak (2022)", context: "Pandemic boosted local shopping.", answer: "$12.4B", options: ["$5B", "$8B", "$12.4B", "$18B"], explanation: "Hit $12.4B at peak. Highest valued wholesale marketplace." },
+            
+            // CHECKR - Background checks
+            { emoji: "✅", name: "Checkr", stage: "Seed (2014)", context: "Fast background checks via API.", answer: "$4M", options: ["$1M", "$4M", "$12M", "$25M"], explanation: "YC S14. Background checks were broken and slow." },
+            { emoji: "✅", name: "Checkr", stage: "Series C (2019)", context: "Used by Uber, Lyft, Instacart for driver checks.", answer: "$2.2B", options: ["$600M", "$1.2B", "$2.2B", "$3.5B"], explanation: "Gig economy needed fast, reliable checks." },
+            { emoji: "✅", name: "Checkr", stage: "Peak (2022)", context: "Background checks for the great resignation.", answer: "$5B", options: ["$2B", "$3.5B", "$5B", "$7B"], explanation: "Hit $5B as hiring exploded post-COVID." },
+            
+            // GUSTO - Payroll
+            { emoji: "💰", name: "Gusto", stage: "Seed as ZenPayroll (2012)", context: "Payroll that doesn't suck. YC W12.", answer: "$6M", options: ["$2M", "$6M", "$15M", "$30M"], explanation: "Started as ZenPayroll. Payroll was painful for small business." },
+            { emoji: "💰", name: "Gusto", stage: "Series C (2018)", context: "Rebranded. HR platform for SMBs.", answer: "$2B", options: ["$600M", "$1.2B", "$2B", "$3.5B"], explanation: "Became full HR platform, not just payroll." },
+            { emoji: "💰", name: "Gusto", stage: "Peak (2021)", context: "SMB growth exploded. PPP loans helped.", answer: "$10B", options: ["$4B", "$7B", "$10B", "$15B"], explanation: "Hit $10B serving 200K+ businesses." },
+            
+            // SEGMENT - Customer data
+            { emoji: "📊", name: "Segment", stage: "Seed (2011)", context: "Pivoted 3 times. Finally found customer data.", answer: "$2M", options: ["$600K", "$2M", "$6M", "$12M"], explanation: "YC S11. Third pivot was the charm!" },
+            { emoji: "📊", name: "Segment", stage: "Series B (2016)", context: "Customer data platform taking off.", answer: "$175M", options: ["$50M", "$100M", "$175M", "$350M"], explanation: "Accel led. Every company needed customer data unification." },
+            { emoji: "📊", name: "Segment", stage: "Acquired by Twilio (2020)", context: "Twilio buying for communications + data.", answer: "$3.2B", options: ["$1.2B", "$2B", "$3.2B", "$5B"], explanation: "Twilio paid $3.2B in stock. Great outcome!" },
+            
+            // PAGERDUTY - On-call management
+            { emoji: "📟", name: "PagerDuty", stage: "Seed (2010)", context: "Wake up engineers when servers go down.", answer: "$2M", options: ["$500K", "$2M", "$6M", "$12M"], explanation: "YC S10. On-call rotations were nightmare before this." },
+            { emoji: "📟", name: "PagerDuty", stage: "Series C (2016)", context: "DevOps is mainstream. Incident management critical.", answer: "$650M", options: ["$200M", "$400M", "$650M", "$1B"], explanation: "Accel led. Every tech company needed incident management." },
+            { emoji: "📟", name: "PagerDuty", stage: "IPO (2019)", context: "Going public. DevOps darling.", answer: "$1.8B", options: ["$800M", "$1.3B", "$1.8B", "$2.8B"], explanation: "IPO'd at $1.8B. Not the biggest but solid exit." }
         ];
 
         let shuffled = [];
