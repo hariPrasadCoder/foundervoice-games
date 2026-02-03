@@ -614,7 +614,7 @@
                 <div class="budget-header">
                     <div>
                         <div class="budget-label">Your Fund</div>
-                        <div class="budget-value">$<span id="budget-display">10.0</span>M</div>
+                        <div class="budget-value">$<span id="budget-display">5.0</span>M</div>
                     </div>
                     <div class="budget-cost">
                         <div class="budget-label">Per Investment</div>
@@ -754,7 +754,7 @@
             { name: "Flexport", batch: "YC W14", pitch: "Software to manage freight shipping and customs", context: "Founder had zero logistics experience", outcome: "Valued at $8B", valuation: 8, emoji: "🚢" }
         ];
 
-        const STARTING_BUDGET = 10;
+        const STARTING_BUDGET = 5;
         const INVESTMENT_COST = 0.5;
         
         let currentIndex = 0;
@@ -978,7 +978,7 @@
             const roi = spent > 0 ? Math.round((portfolioVal * 1000) / spent) : 0;
             const roiStr = roi >= 1000 ? `${Math.round(roi / 1000)}K` : roi;
             
-            const text = `🎰 Pitch Roulette Results\n\n💰 $10M fund → ${invested.length} investments\n💎 Portfolio: $${portfolioVal}B\n📈 ROI: ${roiStr}x\n😱 Passed on: $${missedVal}B\n\nCan you beat me?\n${window.location.href}`;
+            const text = `🎰 Pitch Roulette Results\n\n💰 $5M fund → ${invested.length} investments\n💎 Portfolio: $${portfolioVal}B\n📈 ROI: ${roiStr}x\n😱 Passed on: $${missedVal}B\n\nCan you beat me?\n${window.location.href}`;
             
             if (navigator.share) navigator.share({ text, url: window.location.href });
             else { navigator.clipboard.writeText(text); alert('Copied to clipboard!'); }
