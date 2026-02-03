@@ -2,7 +2,7 @@
 
 Fun viral games for YC founders and startup enthusiasts.
 
-**Live Site:** [foundervoice-games.github.io](https://your-username.github.io/foundervoice-games) (update after deployment)
+**Live Site:** [hariprasadcoder.github.io/foundervoice-games](https://hariprasadcoder.github.io/foundervoice-games/)
 
 ## Games
 
