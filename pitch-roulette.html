@@ -7,443 +7,782 @@
     <meta name="description" content="Swipe on real YC startup pitches. Would you have invested in Airbnb, Stripe, or Dropbox?">
     <meta property="og:title" content="Pitch Roulette - Would You Have Invested?">
     <meta property="og:description" content="I just played Pitch Roulette and passed on billion-dollar companies! Can you do better?">
-    <meta property="og:type" content="website">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'fv-orange': '#FF6B35',
-                        'fv-warm': '#FF8C42',
-                        'fv-cream': '#FFF8F0',
-                        'fv-dark': '#1A1A1A',
-                        'pass-red': '#EF4444',
-                        'invest-green': '#22C55E',
-                    }
-                }
-            }
-        }
-    </script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; }
-        .gradient-bg {
-            background: linear-gradient(135deg, #FF6B35 0%, #FF8C42 50%, #FFB347 100%);
+        :root {
+            --fg-primary: #0D0D0D;
+            --fg-secondary: #525252;
+            --fg-muted: #8C8C8C;
+            --bg-primary: #FAFAFA;
+            --bg-card: #FFFFFF;
+            --accent: #E85D2B;
+            --accent-hover: #D14E1F;
+            --accent-subtle: #FEF3EF;
+            --border: #E5E5E5;
+            --pass-red: #DC2626;
+            --pass-bg: #FEF2F2;
+            --invest-green: #16A34A;
+            --invest-bg: #F0FDF4;
         }
-        .card {
-            transition: transform 0.3s ease;
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--bg-primary);
+            color: var(--fg-primary);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+        }
+        
+        h1, h2, h3, h4 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+        }
+        
+        /* Header */
+        .header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .header-inner {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 14px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: var(--fg-primary);
+        }
+        
+        .logo-mark {
+            width: 32px;
+            height: 32px;
+            background: var(--accent);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            color: white;
+            font-size: 12px;
+        }
+        
+        .logo-text {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 600;
+            font-size: 16px;
+        }
+        
+        .header-link {
+            color: var(--fg-secondary);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+        }
+        
+        .header-link:hover { color: var(--accent); }
+        
+        /* Main */
+        main {
+            max-width: 440px;
+            margin: 0 auto;
+            padding: 24px 20px 40px;
+        }
+        
+        /* Budget */
+        .budget-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .budget-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 16px;
+        }
+        
+        .budget-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--fg-muted);
+            margin-bottom: 4px;
+        }
+        
+        .budget-value {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+        }
+        
+        .budget-cost {
+            text-align: right;
+        }
+        
+        .budget-cost-value {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--fg-secondary);
+        }
+        
+        .budget-bar {
+            height: 8px;
+            background: var(--border);
+            border-radius: 100px;
+            overflow: hidden;
+        }
+        
+        .budget-bar-fill {
+            height: 100%;
+            background: var(--invest-green);
+            border-radius: 100px;
+            transition: all 0.4s ease;
+        }
+        
+        .budget-bar-fill.medium { background: #F59E0B; }
+        .budget-bar-fill.low { background: var(--pass-red); }
+        
+        .budget-remaining {
+            text-align: center;
+            font-size: 12px;
+            color: var(--fg-muted);
+            margin-top: 10px;
+        }
+        
+        /* Progress */
+        .progress-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            color: var(--fg-muted);
+            margin-bottom: 8px;
+        }
+        
+        .progress-bar {
+            height: 4px;
+            background: var(--border);
+            border-radius: 100px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        
+        .progress-bar-fill {
+            height: 100%;
+            background: var(--accent);
+            border-radius: 100px;
+            transition: width 0.3s ease;
+        }
+        
+        /* Instructions */
+        .instructions {
+            text-align: center;
+            font-size: 13px;
+            color: var(--fg-muted);
+            margin-bottom: 16px;
+        }
+        
+        .instructions strong.pass { color: var(--pass-red); }
+        .instructions strong.invest { color: var(--invest-green); }
+        
+        /* Out of funds */
+        .out-of-funds {
+            background: var(--pass-bg);
+            color: var(--pass-red);
+            text-align: center;
+            padding: 12px 16px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            display: none;
+        }
+        
+        .out-of-funds.visible { display: block; }
+        
+        /* Card */
+        .card-container {
+            position: relative;
+            height: 360px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+        }
+        
+        .pitch-card {
+            position: absolute;
+            width: 100%;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 32px 28px;
+            cursor: grab;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
             touch-action: pan-y;
         }
-        .card.swiping-left {
-            transform: translateX(-150%) rotate(-30deg);
+        
+        .pitch-card:active { cursor: grabbing; }
+        .pitch-card.dragging { transition: none; }
+        
+        .pitch-card.swiping-left {
+            transform: translateX(-150%) rotate(-20deg);
             opacity: 0;
         }
-        .card.swiping-right {
-            transform: translateX(150%) rotate(30deg);
+        
+        .pitch-card.swiping-right {
+            transform: translateX(150%) rotate(20deg);
             opacity: 0;
         }
-        .card.dragging {
-            transition: none;
+        
+        .card-icon {
+            font-size: 48px;
+            text-align: center;
+            margin-bottom: 20px;
         }
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-5px); }
-            75% { transform: translateX(5px); }
+        
+        .card-batch {
+            text-align: center;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--fg-muted);
+            margin-bottom: 12px;
         }
-        .shake { animation: shake 0.3s ease-in-out; }
-        .result-card {
-            animation: fadeInUp 0.5s ease forwards;
+        
+        .card-pitch {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 20px;
+            font-weight: 600;
+            text-align: center;
+            line-height: 1.4;
+            margin-bottom: 16px;
+            color: var(--fg-primary);
+        }
+        
+        .card-context {
+            text-align: center;
+            font-size: 13px;
+            color: var(--fg-muted);
+        }
+        
+        /* Indicators */
+        .indicator {
+            position: absolute;
+            top: 20px;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 14px;
+            opacity: 0;
+            transition: opacity 0.15s;
+        }
+        
+        .indicator-pass {
+            left: 20px;
+            background: var(--pass-red);
+            color: white;
+        }
+        
+        .indicator-invest {
+            right: 20px;
+            background: var(--invest-green);
+            color: white;
+        }
+        
+        /* Buttons */
+        .button-row {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+        }
+        
+        .action-btn {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            border: 2px solid;
+            background: var(--bg-card);
+            font-size: 24px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .action-btn:active { transform: scale(0.95); }
+        
+        .btn-pass {
+            border-color: var(--pass-red);
+            color: var(--pass-red);
+        }
+        
+        .btn-pass:hover {
+            background: var(--pass-red);
+            color: white;
+        }
+        
+        .btn-invest {
+            border-color: var(--invest-green);
+            color: var(--invest-green);
+        }
+        
+        .btn-invest:hover {
+            background: var(--invest-green);
+            color: white;
+        }
+        
+        .btn-invest:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+        
+        .btn-invest:disabled:hover {
+            background: var(--bg-card);
+            color: var(--invest-green);
+        }
+        
+        .keyboard-hint {
+            text-align: center;
+            font-size: 12px;
+            color: var(--fg-muted);
+            margin-top: 16px;
+        }
+        
+        /* Results */
+        .results-container { display: none; }
+        .results-container.visible { display: block; }
+        .game-container.hidden { display: none; }
+        
+        .results-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+        
+        .results-emoji {
+            font-size: 64px;
+            margin-bottom: 16px;
+        }
+        
+        .results-title {
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+        
+        .results-subtitle {
+            color: var(--fg-secondary);
+            font-size: 15px;
+        }
+        
+        .results-stats {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+        
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            text-align: center;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .stat-number {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+        }
+        
+        .stat-number.green { color: var(--invest-green); }
+        .stat-number.red { color: var(--pass-red); }
+        .stat-number.orange { color: var(--accent); }
+        
+        .stat-label {
+            font-size: 12px;
+            color: var(--fg-muted);
+            margin-top: 4px;
+        }
+        
+        .value-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            text-align: center;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .roi-row {
+            text-align: center;
+        }
+        
+        .roi-value {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 36px;
+            font-weight: 700;
+        }
+        
+        .roi-value.positive { color: var(--invest-green); }
+        .roi-value.neutral { color: var(--fg-muted); }
+        
+        /* Company Lists */
+        .companies-section h3 {
+            font-size: 16px;
+            margin-bottom: 12px;
+        }
+        
+        .company-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 24px;
+        }
+        
+        .company-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 14px 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            animation: fadeInUp 0.4s ease forwards;
             opacity: 0;
         }
+        
+        .company-item.passed { border-left: 3px solid var(--pass-red); }
+        .company-item.invested { border-left: 3px solid var(--invest-green); }
+        
         @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
+            from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
+        
+        .company-icon { font-size: 24px; }
+        
+        .company-info { flex: 1; }
+        
+        .company-name {
+            font-weight: 600;
+            font-size: 15px;
+        }
+        
+        .company-outcome {
+            font-size: 12px;
+            color: var(--fg-muted);
+        }
+        
+        .company-value {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 14px;
+        }
+        
+        .company-value.red { color: var(--pass-red); }
+        .company-value.green { color: var(--invest-green); }
+        
+        .empty-list {
+            text-align: center;
+            color: var(--fg-muted);
+            font-size: 14px;
+            padding: 20px;
+        }
+        
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .btn-primary {
+            width: 100%;
+            padding: 16px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+            text-decoration: none;
+            border: none;
+            font-family: inherit;
+        }
+        
+        .btn-primary.orange {
+            background: var(--accent);
+            color: white;
+        }
+        
+        .btn-primary.orange:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+        }
+        
+        .btn-primary.outline {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            color: var(--fg-primary);
+        }
+        
+        .btn-primary.outline:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+        
+        /* Footer */
+        .footer {
+            border-top: 1px solid var(--border);
+            padding: 32px 20px;
+            margin-top: 40px;
+        }
+        
+        .footer-inner {
+            max-width: 440px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .footer-link {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .footer-disclaimer {
+            font-size: 11px;
+            color: var(--fg-muted);
+            margin-top: 16px;
+            line-height: 1.6;
+        }
+        
+        /* Animations */
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-8px); }
+            75% { transform: translateX(8px); }
+        }
+        
+        .shake { animation: shake 0.3s ease-in-out; }
     </style>
 </head>
-<body class="bg-fv-cream min-h-screen">
-    <!-- Header -->
-    <header class="bg-white shadow-sm sticky top-0 z-50">
-        <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-            <a href="index.html" class="flex items-center gap-2">
-                <div class="w-8 h-8 rounded-lg gradient-bg flex items-center justify-center">
-                    <span class="text-white font-bold text-sm">FV</span>
-                </div>
-                <span class="font-bold text-lg text-fv-dark">FounderVoice</span>
+<body>
+    <header class="header">
+        <div class="header-inner">
+            <a href="index.html" class="logo">
+                <div class="logo-mark">FV</div>
+                <span class="logo-text">FounderVoice</span>
             </a>
-            <a href="index.html" class="text-fv-orange font-medium text-sm hover:underline">
-                ← All Games
-            </a>
+            <a href="index.html" class="header-link">← All Games</a>
         </div>
     </header>
 
-    <main class="max-w-lg mx-auto px-4 py-8">
-        <!-- Game Container -->
-        <div id="game-container">
-            <!-- Budget Display -->
-            <div class="bg-white rounded-xl p-4 mb-6 shadow-sm border-2 border-fv-orange">
-                <div class="flex items-center justify-between">
+    <main>
+        <div id="game-container" class="game-container">
+            <!-- Budget -->
+            <div class="budget-card">
+                <div class="budget-header">
                     <div>
-                        <div class="text-xs uppercase tracking-wider text-gray-400">Your Fund</div>
-                        <div class="text-2xl font-bold text-fv-dark">$<span id="budget-display">10</span>M</div>
+                        <div class="budget-label">Your Fund</div>
+                        <div class="budget-value">$<span id="budget-display">10.0</span>M</div>
                     </div>
-                    <div class="text-right">
-                        <div class="text-xs uppercase tracking-wider text-gray-400">Per Investment</div>
-                        <div class="text-lg font-semibold text-gray-600">$500K</div>
+                    <div class="budget-cost">
+                        <div class="budget-label">Per Investment</div>
+                        <div class="budget-cost-value">$500K</div>
                     </div>
                 </div>
-                <div class="mt-3 h-3 bg-gray-200 rounded-full overflow-hidden">
-                    <div id="budget-bar" class="h-full bg-invest-green transition-all duration-300" style="width: 100%"></div>
+                <div class="budget-bar">
+                    <div id="budget-bar" class="budget-bar-fill" style="width: 100%"></div>
                 </div>
-                <div class="text-xs text-gray-500 mt-1 text-center"><span id="investments-remaining">20</span> investments remaining</div>
+                <div class="budget-remaining"><span id="investments-remaining">20</span> investments remaining</div>
             </div>
-
+            
             <!-- Progress -->
-            <div class="mb-6">
-                <div class="flex justify-between text-sm text-gray-600 mb-2">
-                    <span>Pitch <span id="current-num">1</span> of <span id="total-num">20</span></span>
-                    <span id="score-display">💰 <span id="invested-count">0</span> invested</span>
-                </div>
-                <div class="h-2 bg-gray-200 rounded-full overflow-hidden">
-                    <div id="progress-bar" class="h-full gradient-bg transition-all duration-300" style="width: 5%"></div>
-                </div>
+            <div class="progress-row">
+                <span>Pitch <span id="current-num">1</span> of <span id="total-num">20</span></span>
+                <span>💰 <span id="invested-count">0</span> invested</span>
             </div>
-
+            <div class="progress-bar">
+                <div id="progress-bar" class="progress-bar-fill" style="width: 5%"></div>
+            </div>
+            
             <!-- Instructions -->
-            <div id="instructions" class="text-center mb-6 text-gray-600">
-                <p class="text-sm">👈 Swipe left to <strong class="text-pass-red">PASS</strong> | Swipe right to <strong class="text-invest-green">INVEST</strong> 👉</p>
+            <div class="instructions">
+                👈 Swipe left to <strong class="pass">PASS</strong> · Swipe right to <strong class="invest">INVEST</strong> 👉
             </div>
             
-            <!-- Out of funds warning -->
-            <div id="out-of-funds" class="hidden bg-pass-red text-white text-center py-2 px-4 rounded-lg mb-4 font-semibold">
-                💸 Out of funds! You can only PASS now.
+            <!-- Out of funds -->
+            <div id="out-of-funds" class="out-of-funds">
+                💸 Out of funds! You can only pass now.
             </div>
-
-            <!-- Card Container -->
-            <div id="card-container" class="relative h-96 flex items-center justify-center">
-                <div id="pitch-card" class="card absolute w-full bg-white rounded-2xl shadow-xl p-6 cursor-grab active:cursor-grabbing border-2 border-gray-100">
-                    <div class="text-center">
-                        <div class="text-5xl mb-4" id="card-emoji">🚀</div>
-                        <div class="text-xs uppercase tracking-wider text-gray-400 mb-2" id="card-batch">YC W08</div>
-                        <h2 class="text-xl font-bold text-fv-dark mb-4" id="card-pitch">"A website where people can rent out air mattresses in their apartment to strangers"</h2>
-                        <div class="text-sm text-gray-500" id="card-context">Rejected by 7 investors before YC</div>
-                    </div>
-                    
-                    <!-- Swipe indicators -->
-                    <div id="pass-indicator" class="absolute left-4 top-4 bg-pass-red text-white px-3 py-1 rounded-lg font-bold opacity-0 transition-opacity">
-                        PASS 👎
-                    </div>
-                    <div id="invest-indicator" class="absolute right-4 top-4 bg-invest-green text-white px-3 py-1 rounded-lg font-bold opacity-0 transition-opacity">
-                        INVEST 💰
-                    </div>
+            
+            <!-- Card -->
+            <div class="card-container">
+                <div id="pitch-card" class="pitch-card">
+                    <div id="indicator-pass" class="indicator indicator-pass">PASS 👎</div>
+                    <div id="indicator-invest" class="indicator indicator-invest">INVEST 💰</div>
+                    <div class="card-icon" id="card-emoji">🚀</div>
+                    <div class="card-batch" id="card-batch">YC W08</div>
+                    <div class="card-pitch" id="card-pitch">"A website where people can rent out air mattresses in their apartment to strangers"</div>
+                    <div class="card-context" id="card-context">Rejected by 7 investors before YC</div>
                 </div>
             </div>
-
-            <!-- Buttons -->
-            <div class="flex justify-center gap-8 mt-6">
-                <button id="pass-btn" class="w-16 h-16 rounded-full bg-white shadow-lg border-2 border-pass-red text-pass-red text-2xl hover:bg-pass-red hover:text-white transition-all active:scale-95">
-                    ✕
-                </button>
-                <button id="invest-btn" class="w-16 h-16 rounded-full bg-white shadow-lg border-2 border-invest-green text-invest-green text-2xl hover:bg-invest-green hover:text-white transition-all active:scale-95">
-                    ✓
-                </button>
-            </div>
             
-            <p class="text-center text-gray-400 text-xs mt-4">Or use keyboard: ← to pass, → to invest</p>
+            <!-- Buttons -->
+            <div class="button-row">
+                <button id="pass-btn" class="action-btn btn-pass">✕</button>
+                <button id="invest-btn" class="action-btn btn-invest">✓</button>
+            </div>
+            <div class="keyboard-hint">Or use ← → arrow keys</div>
         </div>
 
-        <!-- Results Container (hidden initially) -->
-        <div id="results-container" class="hidden">
-            <div class="text-center mb-8">
-                <div class="text-6xl mb-4" id="results-emoji">😱</div>
-                <h2 class="text-2xl font-bold text-fv-dark mb-2" id="results-title">Your Investment Results</h2>
-                <p class="text-gray-600" id="results-subtitle">Here's how you did...</p>
+        <!-- Results -->
+        <div id="results-container" class="results-container">
+            <div class="results-header">
+                <div class="results-emoji" id="results-emoji">😱</div>
+                <h2 class="results-title" id="results-title">Your Results</h2>
+                <p class="results-subtitle" id="results-subtitle">Here's how you did...</p>
             </div>
-
-            <div class="bg-white rounded-2xl shadow-lg p-6 mb-6">
-                <div class="grid grid-cols-3 gap-4 text-center mb-6">
+            
+            <div class="results-stats">
+                <div class="stats-row">
                     <div>
-                        <div class="text-3xl font-bold text-invest-green" id="final-invested">0</div>
-                        <div class="text-sm text-gray-500">Invested</div>
+                        <div class="stat-number green" id="final-invested">0</div>
+                        <div class="stat-label">Invested</div>
                     </div>
                     <div>
-                        <div class="text-3xl font-bold text-pass-red" id="final-passed">0</div>
-                        <div class="text-sm text-gray-500">Passed</div>
+                        <div class="stat-number red" id="final-passed">0</div>
+                        <div class="stat-label">Passed</div>
                     </div>
                     <div>
-                        <div class="text-3xl font-bold text-fv-orange" id="final-budget">$0M</div>
-                        <div class="text-sm text-gray-500">Left Over</div>
+                        <div class="stat-number orange" id="final-budget">$0M</div>
+                        <div class="stat-label">Left Over</div>
                     </div>
                 </div>
-                <div class="grid grid-cols-2 gap-4 text-center border-t pt-4">
+                <div class="value-row">
                     <div>
-                        <div class="text-sm text-gray-500">You passed on</div>
-                        <div class="text-3xl font-bold text-pass-red" id="missed-value">$0B</div>
+                        <div class="stat-number red" id="missed-value">$0B</div>
+                        <div class="stat-label">Passed On</div>
                     </div>
                     <div>
-                        <div class="text-sm text-gray-500">Your portfolio worth</div>
-                        <div class="text-3xl font-bold text-invest-green" id="portfolio-value">$0B</div>
+                        <div class="stat-number green" id="portfolio-value">$0B</div>
+                        <div class="stat-label">Portfolio Value</div>
                     </div>
                 </div>
-                <div class="text-center border-t pt-4 mt-4">
-                    <div class="text-sm text-gray-500">Return on Investment</div>
-                    <div class="text-4xl font-bold" id="roi-value">0x</div>
+                <div class="roi-row">
+                    <div class="stat-label">Return on Investment</div>
+                    <div class="roi-value" id="roi-value">0x</div>
                 </div>
             </div>
-
-            <h3 class="font-bold text-fv-dark mb-4">Companies You Passed On:</h3>
-            <div id="passed-companies" class="space-y-3 mb-8">
-                <!-- Filled by JS -->
+            
+            <div class="companies-section">
+                <h3>Companies You Passed On</h3>
+                <div id="passed-companies" class="company-list"></div>
+                
+                <h3>Your Portfolio</h3>
+                <div id="invested-companies" class="company-list"></div>
             </div>
-
-            <h3 class="font-bold text-fv-dark mb-4">Smart Investments:</h3>
-            <div id="invested-companies" class="space-y-3 mb-8">
-                <!-- Filled by JS -->
-            </div>
-
-            <!-- Share & Replay -->
-            <div class="flex flex-col gap-3">
-                <button id="share-btn" class="w-full bg-fv-orange text-white font-semibold py-3 rounded-xl hover:bg-fv-warm transition-colors">
-                    📤 Share Results
-                </button>
-                <button id="replay-btn" class="w-full bg-white text-fv-dark font-semibold py-3 rounded-xl border-2 border-gray-200 hover:border-fv-orange transition-colors">
-                    🔄 Play Again
-                </button>
-                <a href="founder-quiz.html" class="w-full bg-fv-cream text-fv-orange font-semibold py-3 rounded-xl text-center hover:bg-fv-orange hover:text-white transition-colors border-2 border-fv-orange">
-                    🧠 Take the Founder Quiz
-                </a>
+            
+            <div class="action-buttons">
+                <button id="share-btn" class="btn-primary orange">📤 Share Results</button>
+                <button id="replay-btn" class="btn-primary outline">🔄 Play Again</button>
+                <a href="founder-quiz.html" class="btn-primary outline">🧠 Take the Founder Quiz</a>
             </div>
         </div>
     </main>
 
-    <!-- Footer -->
-    <footer class="bg-fv-dark text-white py-8 px-4 mt-12">
-        <div class="max-w-lg mx-auto text-center">
-            <a href="https://foundervoice.online" class="text-fv-orange hover:underline font-medium">FounderVoice</a>
-            <p class="text-gray-500 text-sm mt-2">Real pitch data from public YC records</p>
+    <footer class="footer">
+        <div class="footer-inner">
+            <a href="https://foundervoice.online" class="footer-link">FounderVoice</a>
+            <p class="footer-disclaimer">
+                Not affiliated with Y Combinator. We're just fans celebrating the incredible companies YC has backed. All data from public sources.
+            </p>
         </div>
     </footer>
 
     <script>
-        // Real YC Company Data - Verified from public sources
         const companies = [
-            {
-                name: "Airbnb",
-                batch: "YC W08",
-                pitch: "A website where people can rent out air mattresses in their apartment to strangers",
-                context: "Rejected by 7 investors before YC",
-                outcome: "IPO'd at $47B, now worth $80B+",
-                valuation: 80,
-                emoji: "🏠"
-            },
-            {
-                name: "Stripe",
-                batch: "YC S09",
-                pitch: "7 lines of code to accept payments on your website",
-                context: "Founded by two Irish teenagers",
-                outcome: "Valued at $95B, processes $1T+ annually",
-                valuation: 95,
-                emoji: "💳"
-            },
-            {
-                name: "Dropbox",
-                batch: "YC S07",
-                pitch: "Sync files across your computers automatically",
-                context: "Steve Jobs tried to buy them for $800M",
-                outcome: "IPO'd at $12B, still public",
-                valuation: 12,
-                emoji: "📦"
-            },
-            {
-                name: "DoorDash",
-                batch: "YC S13",
-                pitch: "Get restaurant food delivered to your door",
-                context: "Founders personally delivered orders in Palo Alto",
-                outcome: "IPO'd at $72B market cap",
-                valuation: 72,
-                emoji: "🍔"
-            },
-            {
-                name: "Coinbase",
-                batch: "YC S12",
-                pitch: "Buy and sell Bitcoin easily",
-                context: "Applied as a solo founder",
-                outcome: "IPO'd at $86B, first major crypto exchange to go public",
-                valuation: 86,
-                emoji: "₿"
-            },
-            {
-                name: "Instacart",
-                batch: "YC S12",
-                pitch: "Get groceries delivered from local stores in an hour",
-                context: "Founder was frustrated with Amazon Fresh delivery times",
-                outcome: "IPO'd in 2023, valued at $10B+",
-                valuation: 10,
-                emoji: "🛒"
-            },
-            {
-                name: "Twitch",
-                batch: "YC W07 (as Justin.tv)",
-                pitch: "Watch other people play video games live",
-                context: "Started as a 24/7 lifecasting site",
-                outcome: "Sold to Amazon for $970M",
-                valuation: 15,
-                emoji: "🎮"
-            },
-            {
-                name: "Reddit",
-                batch: "YC S05",
-                pitch: "The front page of the internet",
-                context: "First ever YC batch",
-                outcome: "IPO'd in 2024, valued at $10B+",
-                valuation: 10,
-                emoji: "👽"
-            },
-            {
-                name: "Cruise",
-                batch: "YC W14",
-                pitch: "A kit that turns any car into a self-driving car",
-                context: "Pivoted from a $10K aftermarket kit",
-                outcome: "Acquired by GM for $1B+, later valued at $30B",
-                valuation: 30,
-                emoji: "🚗"
-            },
-            {
-                name: "Rappi",
-                batch: "YC W16",
-                pitch: "Order anything and get it delivered in Latin America",
-                context: "Started in Colombia",
-                outcome: "Valued at $5.25B, largest Latin American on-demand delivery",
-                valuation: 5,
-                emoji: "🛵"
-            },
-            {
-                name: "Brex",
-                batch: "YC W17",
-                pitch: "Corporate credit cards for startups with no personal guarantee",
-                context: "Founders were 21-year-old Brazilian immigrants",
-                outcome: "Valued at $12B+",
-                valuation: 12,
-                emoji: "💼"
-            },
-            {
-                name: "Ginkgo Bioworks",
-                batch: "YC S14",
-                pitch: "A platform for programming cells like computers",
-                context: "Founders met in a synthetic biology PhD program",
-                outcome: "SPAC'd at $15B valuation",
-                valuation: 15,
-                emoji: "🧬"
-            },
-            {
-                name: "Zapier",
-                batch: "YC S12",
-                pitch: "Connect your web apps and automate workflows without code",
-                context: "Fully remote from day one",
-                outcome: "Profitable, $5B+ valuation, never raised Series A",
-                valuation: 5,
-                emoji: "⚡"
-            },
-            {
-                name: "PagerDuty",
-                batch: "YC S10",
-                pitch: "Wake up engineers when their servers go down",
-                context: "Built to solve on-call nightmares",
-                outcome: "IPO'd at $1.8B",
-                valuation: 2,
-                emoji: "📟"
-            },
-            {
-                name: "Gusto",
-                batch: "YC W12 (as ZenPayroll)",
-                pitch: "Payroll software that doesn't make you want to cry",
-                context: "Rebranded from ZenPayroll",
-                outcome: "Valued at $10B+",
-                valuation: 10,
-                emoji: "💰"
-            },
-            {
-                name: "Webflow",
-                batch: "YC W13",
-                pitch: "Build professional websites without writing code",
-                context: "Rejected by YC twice before acceptance",
-                outcome: "Valued at $4B",
-                valuation: 4,
-                emoji: "🌐"
-            },
-            {
-                name: "GitLab",
-                batch: "YC W15",
-                pitch: "Open source alternative to GitHub",
-                context: "Started as an open source project in Ukraine",
-                outcome: "IPO'd at $11B, fully remote company",
-                valuation: 11,
-                emoji: "🦊"
-            },
-            {
-                name: "Segment",
-                batch: "YC S11",
-                pitch: "One API to collect customer data and send it anywhere",
-                context: "Pivoted 3 times before finding product-market fit",
-                outcome: "Acquired by Twilio for $3.2B",
-                valuation: 3,
-                emoji: "📊"
-            },
-            {
-                name: "Faire",
-                batch: "YC W17",
-                pitch: "Wholesale marketplace connecting retailers with brands",
-                context: "Founded by ex-Square employees",
-                outcome: "Valued at $12.4B",
-                valuation: 12,
-                emoji: "🏪"
-            },
-            {
-                name: "Flexport",
-                batch: "YC W14",
-                pitch: "Software to manage freight shipping and customs",
-                context: "Founder had zero logistics experience",
-                outcome: "Valued at $8B",
-                valuation: 8,
-                emoji: "🚢"
-            }
+            { name: "Airbnb", batch: "YC W08", pitch: "A website where people can rent out air mattresses in their apartment to strangers", context: "Rejected by 7 investors before YC", outcome: "IPO'd at $47B, now worth $80B+", valuation: 80, emoji: "🏠" },
+            { name: "Stripe", batch: "YC S09", pitch: "7 lines of code to accept payments on your website", context: "Founded by two Irish teenagers", outcome: "Valued at $95B, processes $1T+ annually", valuation: 95, emoji: "💳" },
+            { name: "Dropbox", batch: "YC S07", pitch: "Sync files across your computers automatically", context: "Steve Jobs tried to buy them for $800M", outcome: "IPO'd at $12B, still public", valuation: 12, emoji: "📦" },
+            { name: "DoorDash", batch: "YC S13", pitch: "Get restaurant food delivered to your door", context: "Founders personally delivered orders in Palo Alto", outcome: "IPO'd at $72B market cap", valuation: 72, emoji: "🍔" },
+            { name: "Coinbase", batch: "YC S12", pitch: "Buy and sell Bitcoin easily", context: "Applied as a solo founder", outcome: "IPO'd at $86B, first major crypto exchange to go public", valuation: 86, emoji: "₿" },
+            { name: "Instacart", batch: "YC S12", pitch: "Get groceries delivered from local stores in an hour", context: "Founder was frustrated with Amazon Fresh delivery times", outcome: "IPO'd in 2023, valued at $10B+", valuation: 10, emoji: "🛒" },
+            { name: "Twitch", batch: "YC W07 (as Justin.tv)", pitch: "Watch other people play video games live", context: "Started as a 24/7 lifecasting site", outcome: "Sold to Amazon for $970M", valuation: 15, emoji: "🎮" },
+            { name: "Reddit", batch: "YC S05", pitch: "The front page of the internet", context: "First ever YC batch", outcome: "IPO'd in 2024, valued at $10B+", valuation: 10, emoji: "👽" },
+            { name: "Cruise", batch: "YC W14", pitch: "A kit that turns any car into a self-driving car", context: "Pivoted from a $10K aftermarket kit", outcome: "Acquired by GM for $1B+, later valued at $30B", valuation: 30, emoji: "🚗" },
+            { name: "Rappi", batch: "YC W16", pitch: "Order anything and get it delivered in Latin America", context: "Started in Colombia", outcome: "Valued at $5.25B", valuation: 5, emoji: "🛵" },
+            { name: "Brex", batch: "YC W17", pitch: "Corporate credit cards for startups with no personal guarantee", context: "Founders were 21-year-old Brazilian immigrants", outcome: "Valued at $12B+", valuation: 12, emoji: "💼" },
+            { name: "Ginkgo Bioworks", batch: "YC S14", pitch: "A platform for programming cells like computers", context: "Founders met in a synthetic biology PhD program", outcome: "SPAC'd at $15B valuation", valuation: 15, emoji: "🧬" },
+            { name: "Zapier", batch: "YC S12", pitch: "Connect your web apps and automate workflows without code", context: "Fully remote from day one", outcome: "Profitable, $5B+ valuation", valuation: 5, emoji: "⚡" },
+            { name: "PagerDuty", batch: "YC S10", pitch: "Wake up engineers when their servers go down", context: "Built to solve on-call nightmares", outcome: "IPO'd at $1.8B", valuation: 2, emoji: "📟" },
+            { name: "Gusto", batch: "YC W12 (as ZenPayroll)", pitch: "Payroll software that doesn't make you want to cry", context: "Rebranded from ZenPayroll", outcome: "Valued at $10B+", valuation: 10, emoji: "💰" },
+            { name: "Webflow", batch: "YC W13", pitch: "Build professional websites without writing code", context: "Rejected by YC twice before acceptance", outcome: "Valued at $4B", valuation: 4, emoji: "🌐" },
+            { name: "GitLab", batch: "YC W15", pitch: "Open source alternative to GitHub", context: "Started as an open source project in Ukraine", outcome: "IPO'd at $11B", valuation: 11, emoji: "🦊" },
+            { name: "Segment", batch: "YC S11", pitch: "One API to collect customer data and send it anywhere", context: "Pivoted 3 times before finding PMF", outcome: "Acquired by Twilio for $3.2B", valuation: 3, emoji: "📊" },
+            { name: "Faire", batch: "YC W17", pitch: "Wholesale marketplace connecting retailers with brands", context: "Founded by ex-Square employees", outcome: "Valued at $12.4B", valuation: 12, emoji: "🏪" },
+            { name: "Flexport", batch: "YC W14", pitch: "Software to manage freight shipping and customs", context: "Founder had zero logistics experience", outcome: "Valued at $8B", valuation: 8, emoji: "🚢" }
         ];
 
-        // Game state
+        const STARTING_BUDGET = 10;
+        const INVESTMENT_COST = 0.5;
+        
         let currentIndex = 0;
         let invested = [];
         let passed = [];
         let shuffledCompanies = [];
+        let budget = STARTING_BUDGET;
         let isDragging = false;
         let startX = 0;
         let currentX = 0;
-        
-        // Budget system
-        const STARTING_BUDGET = 10; // $10M
-        const INVESTMENT_COST = 0.5; // $500K per investment
-        let budget = STARTING_BUDGET;
 
-        // DOM elements
         const card = document.getElementById('pitch-card');
-        const passIndicator = document.getElementById('pass-indicator');
-        const investIndicator = document.getElementById('invest-indicator');
+        const passIndicator = document.getElementById('indicator-pass');
+        const investIndicator = document.getElementById('indicator-invest');
         const passBtn = document.getElementById('pass-btn');
         const investBtn = document.getElementById('invest-btn');
         const gameContainer = document.getElementById('game-container');
         const resultsContainer = document.getElementById('results-container');
 
-        // Shuffle array
         function shuffle(array) {
-            const newArray = [...array];
-            for (let i = newArray.length - 1; i > 0; i--) {
+            const arr = [...array];
+            for (let i = arr.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
-                [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+                [arr[i], arr[j]] = [arr[j], arr[i]];
             }
-            return newArray;
+            return arr;
         }
 
-        // Initialize game
         function initGame() {
             shuffledCompanies = shuffle(companies);
             currentIndex = 0;
@@ -453,106 +792,70 @@
             updateBudgetDisplay();
             updateCard();
             gameContainer.classList.remove('hidden');
-            resultsContainer.classList.add('hidden');
-            document.getElementById('out-of-funds').classList.add('hidden');
-            
-            // Reset ROI color
-            const roiElement = document.getElementById('roi-value');
-            roiElement.classList.remove('text-invest-green', 'text-gray-400');
+            resultsContainer.classList.remove('visible');
+            document.getElementById('out-of-funds').classList.remove('visible');
         }
-        
-        // Update budget display
+
         function updateBudgetDisplay() {
-            const budgetDisplay = document.getElementById('budget-display');
-            const budgetBar = document.getElementById('budget-bar');
-            const investmentsRemaining = document.getElementById('investments-remaining');
+            document.getElementById('budget-display').textContent = budget.toFixed(1);
+            const bar = document.getElementById('budget-bar');
+            const pct = (budget / STARTING_BUDGET) * 100;
+            bar.style.width = `${pct}%`;
+            bar.classList.remove('medium', 'low');
+            if (pct <= 25) bar.classList.add('low');
+            else if (pct <= 50) bar.classList.add('medium');
             
-            budgetDisplay.textContent = budget.toFixed(1);
-            const percentRemaining = (budget / STARTING_BUDGET) * 100;
-            budgetBar.style.width = `${percentRemaining}%`;
+            document.getElementById('investments-remaining').textContent = Math.floor(budget / INVESTMENT_COST);
             
-            // Change color based on budget
-            if (percentRemaining <= 25) {
-                budgetBar.classList.remove('bg-invest-green', 'bg-yellow-400');
-                budgetBar.classList.add('bg-pass-red');
-            } else if (percentRemaining <= 50) {
-                budgetBar.classList.remove('bg-invest-green', 'bg-pass-red');
-                budgetBar.classList.add('bg-yellow-400');
-            } else {
-                budgetBar.classList.remove('bg-pass-red', 'bg-yellow-400');
-                budgetBar.classList.add('bg-invest-green');
-            }
-            
-            const remaining = Math.floor(budget / INVESTMENT_COST);
-            investmentsRemaining.textContent = remaining;
-            
-            // Update invest button state
-            const investBtn = document.getElementById('invest-btn');
-            const outOfFundsWarning = document.getElementById('out-of-funds');
+            const outOfFunds = document.getElementById('out-of-funds');
             if (budget < INVESTMENT_COST) {
                 investBtn.disabled = true;
-                investBtn.classList.add('opacity-50', 'cursor-not-allowed');
-                investBtn.classList.remove('hover:bg-invest-green', 'hover:text-white');
-                outOfFundsWarning.classList.remove('hidden');
+                outOfFunds.classList.add('visible');
             } else {
                 investBtn.disabled = false;
-                investBtn.classList.remove('opacity-50', 'cursor-not-allowed');
-                investBtn.classList.add('hover:bg-invest-green', 'hover:text-white');
-                outOfFundsWarning.classList.add('hidden');
+                outOfFunds.classList.remove('visible');
             }
         }
 
-        // Update card display
         function updateCard() {
-            const company = shuffledCompanies[currentIndex];
-            document.getElementById('card-emoji').textContent = company.emoji;
-            document.getElementById('card-batch').textContent = company.batch;
-            document.getElementById('card-pitch').textContent = `"${company.pitch}"`;
-            document.getElementById('card-context').textContent = company.context;
+            const c = shuffledCompanies[currentIndex];
+            document.getElementById('card-emoji').textContent = c.emoji;
+            document.getElementById('card-batch').textContent = c.batch;
+            document.getElementById('card-pitch').textContent = `"${c.pitch}"`;
+            document.getElementById('card-context').textContent = c.context;
             document.getElementById('current-num').textContent = currentIndex + 1;
             document.getElementById('total-num').textContent = shuffledCompanies.length;
             document.getElementById('invested-count').textContent = invested.length;
             document.getElementById('progress-bar').style.width = `${((currentIndex + 1) / shuffledCompanies.length) * 100}%`;
-            
-            // Reset card position
             card.style.transform = '';
             card.classList.remove('swiping-left', 'swiping-right');
             passIndicator.style.opacity = '0';
             investIndicator.style.opacity = '0';
         }
 
-        // Handle swipe
-        function handleSwipe(direction) {
-            const company = shuffledCompanies[currentIndex];
-            
-            if (direction === 'left') {
-                passed.push(company);
+        function handleSwipe(dir) {
+            const c = shuffledCompanies[currentIndex];
+            if (dir === 'left') {
+                passed.push(c);
                 card.classList.add('swiping-left');
             } else {
-                // Check if player has budget to invest
                 if (budget < INVESTMENT_COST) {
-                    // Shake the card and show "Out of funds!" message
                     card.classList.add('shake');
                     setTimeout(() => card.classList.remove('shake'), 300);
                     return;
                 }
                 budget -= INVESTMENT_COST;
-                invested.push(company);
+                invested.push(c);
                 card.classList.add('swiping-right');
                 updateBudgetDisplay();
             }
-
             setTimeout(() => {
                 currentIndex++;
-                if (currentIndex >= shuffledCompanies.length) {
-                    showResults();
-                } else {
-                    updateCard();
-                }
+                if (currentIndex >= shuffledCompanies.length) showResults();
+                else updateCard();
             }, 300);
         }
 
-        // Touch/Mouse events for swiping
         card.addEventListener('mousedown', startDrag);
         card.addEventListener('touchstart', startDrag, { passive: true });
         document.addEventListener('mousemove', drag);
@@ -569,33 +872,18 @@
         function drag(e) {
             if (!isDragging) return;
             currentX = (e.type === 'mousemove' ? e.clientX : e.touches[0].clientX) - startX;
-            
-            const rotation = currentX * 0.1;
-            card.style.transform = `translateX(${currentX}px) rotate(${rotation}deg)`;
-            
-            // Show indicators
-            if (currentX < -50) {
-                passIndicator.style.opacity = Math.min(1, Math.abs(currentX) / 100);
-                investIndicator.style.opacity = '0';
-            } else if (currentX > 50) {
-                investIndicator.style.opacity = Math.min(1, currentX / 100);
-                passIndicator.style.opacity = '0';
-            } else {
-                passIndicator.style.opacity = '0';
-                investIndicator.style.opacity = '0';
-            }
+            card.style.transform = `translateX(${currentX}px) rotate(${currentX * 0.08}deg)`;
+            passIndicator.style.opacity = currentX < -50 ? Math.min(1, Math.abs(currentX) / 100) : 0;
+            investIndicator.style.opacity = currentX > 50 ? Math.min(1, currentX / 100) : 0;
         }
 
         function endDrag() {
             if (!isDragging) return;
             isDragging = false;
             card.classList.remove('dragging');
-            
-            if (currentX < -100) {
-                handleSwipe('left');
-            } else if (currentX > 100) {
-                handleSwipe('right');
-            } else {
+            if (currentX < -100) handleSwipe('left');
+            else if (currentX > 100) handleSwipe('right');
+            else {
                 card.style.transform = '';
                 passIndicator.style.opacity = '0';
                 investIndicator.style.opacity = '0';
@@ -603,144 +891,100 @@
             currentX = 0;
         }
 
-        // Button clicks
         passBtn.addEventListener('click', () => handleSwipe('left'));
         investBtn.addEventListener('click', () => handleSwipe('right'));
-
-        // Keyboard controls
         document.addEventListener('keydown', (e) => {
-            if (resultsContainer.classList.contains('hidden')) {
+            if (!resultsContainer.classList.contains('visible')) {
                 if (e.key === 'ArrowLeft') handleSwipe('left');
                 if (e.key === 'ArrowRight') handleSwipe('right');
             }
         });
 
-        // Show results
         function showResults() {
             gameContainer.classList.add('hidden');
-            resultsContainer.classList.remove('hidden');
+            resultsContainer.classList.add('visible');
             
-            const missedValue = passed.reduce((sum, c) => sum + c.valuation, 0);
-            const portfolioValue = invested.reduce((sum, c) => sum + c.valuation, 0);
-            const amountInvested = invested.length * INVESTMENT_COST;
-            const roi = amountInvested > 0 ? (portfolioValue * 1000 / amountInvested) : 0; // Convert B to M for comparison
+            const missedVal = passed.reduce((s, c) => s + c.valuation, 0);
+            const portfolioVal = invested.reduce((s, c) => s + c.valuation, 0);
+            const spent = invested.length * INVESTMENT_COST;
+            const roi = spent > 0 ? Math.round((portfolioVal * 1000) / spent) : 0;
             
             document.getElementById('final-invested').textContent = invested.length;
             document.getElementById('final-passed').textContent = passed.length;
             document.getElementById('final-budget').textContent = `$${budget.toFixed(1)}M`;
-            document.getElementById('missed-value').textContent = `$${missedValue}B`;
-            document.getElementById('portfolio-value').textContent = `$${portfolioValue}B`;
+            document.getElementById('missed-value').textContent = `$${missedVal}B`;
+            document.getElementById('portfolio-value').textContent = `$${portfolioVal}B`;
             
-            // Format ROI
-            const roiElement = document.getElementById('roi-value');
-            if (roi >= 1000) {
-                roiElement.textContent = `${Math.round(roi / 1000)}Kx`;
-                roiElement.classList.add('text-invest-green');
-            } else if (roi >= 1) {
-                roiElement.textContent = `${Math.round(roi)}x`;
-                roiElement.classList.add('text-invest-green');
-            } else {
-                roiElement.textContent = `0x`;
-                roiElement.classList.add('text-gray-400');
-            }
+            const roiEl = document.getElementById('roi-value');
+            roiEl.textContent = roi >= 1000 ? `${Math.round(roi / 1000)}Kx` : `${roi}x`;
+            roiEl.className = 'roi-value ' + (roi > 0 ? 'positive' : 'neutral');
             
-            // Set emoji and title based on performance
             let emoji, title, subtitle;
-            
-            if (portfolioValue >= 300 && invested.length <= 10) {
-                emoji = '🏆';
-                title = 'Legendary VC Instincts!';
-                subtitle = `$${portfolioValue}B portfolio with just ${invested.length} bets. You're a unicorn hunter!`;
-            } else if (portfolioValue >= 200) {
-                emoji = '🚀';
-                title = 'Incredible Portfolio!';
-                subtitle = `$${portfolioValue}B in value. You picked some big winners!`;
-            } else if (missedValue > 200) {
-                emoji = '😱';
-                title = 'The Ones That Got Away!';
-                subtitle = `You passed on $${missedValue}B worth of companies!`;
-            } else if (missedValue > 100) {
-                emoji = '😅';
-                title = 'Oops, Big Ones Slipped By';
-                subtitle = `You missed some major winners there!`;
-            } else if (portfolioValue > missedValue) {
-                emoji = '🎯';
-                title = 'Solid Investment Strategy!';
-                subtitle = `Your portfolio beat what you passed on. Nice picks!`;
+            if (portfolioVal >= 300 && invested.length <= 10) {
+                emoji = '🏆'; title = 'Legendary VC Instincts!';
+                subtitle = `$${portfolioVal}B portfolio with just ${invested.length} bets.`;
+            } else if (portfolioVal >= 200) {
+                emoji = '🚀'; title = 'Incredible Portfolio!';
+                subtitle = `You built a $${portfolioVal}B portfolio.`;
+            } else if (missedVal > 200) {
+                emoji = '😱'; title = 'The Ones That Got Away!';
+                subtitle = `You passed on $${missedVal}B worth of unicorns.`;
+            } else if (missedVal > 100) {
+                emoji = '😅'; title = 'Some Big Misses';
+                subtitle = `A few billion-dollar companies slipped by.`;
+            } else if (portfolioVal > missedVal) {
+                emoji = '🎯'; title = 'Solid Strategy!';
+                subtitle = `Your picks outperformed what you passed on.`;
             } else {
-                emoji = '🤔';
-                title = 'Learning Experience';
-                subtitle = `Every VC has misses. Try again!`;
+                emoji = '🤔'; title = 'Learning Experience';
+                subtitle = `Every great VC has misses. Try again!`;
             }
             
             document.getElementById('results-emoji').textContent = emoji;
             document.getElementById('results-title').textContent = title;
             document.getElementById('results-subtitle').textContent = subtitle;
             
-            // Render passed companies
-            const passedContainer = document.getElementById('passed-companies');
-            passedContainer.innerHTML = passed.length === 0 
-                ? '<p class="text-gray-500 text-center">None! You invested in everything! 🎉</p>'
+            const passedEl = document.getElementById('passed-companies');
+            passedEl.innerHTML = passed.length === 0 
+                ? '<p class="empty-list">None! You invested in everything! 🎉</p>'
                 : passed.map((c, i) => `
-                    <div class="result-card bg-white rounded-xl p-4 shadow border-l-4 border-pass-red" style="animation-delay: ${i * 0.1}s">
-                        <div class="flex items-center gap-3">
-                            <span class="text-2xl">${c.emoji}</span>
-                            <div class="flex-1">
-                                <h4 class="font-bold text-fv-dark">${c.name}</h4>
-                                <p class="text-sm text-gray-500">${c.outcome}</p>
-                            </div>
-                            <span class="text-pass-red font-bold">$${c.valuation}B</span>
+                    <div class="company-item passed" style="animation-delay: ${i * 0.05}s">
+                        <span class="company-icon">${c.emoji}</span>
+                        <div class="company-info">
+                            <div class="company-name">${c.name}</div>
+                            <div class="company-outcome">${c.outcome}</div>
                         </div>
-                    </div>
-                `).join('');
+                        <span class="company-value red">$${c.valuation}B</span>
+                    </div>`).join('');
             
-            // Render invested companies
-            const investedContainer = document.getElementById('invested-companies');
-            investedContainer.innerHTML = invested.length === 0
-                ? '<p class="text-gray-500 text-center">None! You passed on everything! 😬</p>'
+            const investedEl = document.getElementById('invested-companies');
+            investedEl.innerHTML = invested.length === 0
+                ? '<p class="empty-list">None! You passed on everything! 😬</p>'
                 : invested.map((c, i) => `
-                    <div class="result-card bg-white rounded-xl p-4 shadow border-l-4 border-invest-green" style="animation-delay: ${i * 0.1}s">
-                        <div class="flex items-center gap-3">
-                            <span class="text-2xl">${c.emoji}</span>
-                            <div class="flex-1">
-                                <h4 class="font-bold text-fv-dark">${c.name}</h4>
-                                <p class="text-sm text-gray-500">${c.outcome}</p>
-                            </div>
-                            <span class="text-invest-green font-bold">$${c.valuation}B</span>
+                    <div class="company-item invested" style="animation-delay: ${i * 0.05}s">
+                        <span class="company-icon">${c.emoji}</span>
+                        <div class="company-info">
+                            <div class="company-name">${c.name}</div>
+                            <div class="company-outcome">${c.outcome}</div>
                         </div>
-                    </div>
-                `).join('');
+                        <span class="company-value green">$${c.valuation}B</span>
+                    </div>`).join('');
         }
 
-        // Share results
         document.getElementById('share-btn').addEventListener('click', () => {
-            const missedValue = passed.reduce((sum, c) => sum + c.valuation, 0);
-            const portfolioValue = invested.reduce((sum, c) => sum + c.valuation, 0);
-            const amountInvested = invested.length * INVESTMENT_COST;
-            const roi = amountInvested > 0 ? Math.round((portfolioValue * 1000 / amountInvested)) : 0;
+            const missedVal = passed.reduce((s, c) => s + c.valuation, 0);
+            const portfolioVal = invested.reduce((s, c) => s + c.valuation, 0);
+            const spent = invested.length * INVESTMENT_COST;
+            const roi = spent > 0 ? Math.round((portfolioVal * 1000) / spent) : 0;
+            const roiStr = roi >= 1000 ? `${Math.round(roi / 1000)}K` : roi;
             
-            const text = `🎰 I just played Pitch Roulette!\n\n` +
-                `💰 Started with $10M fund\n` +
-                `📊 Invested in ${invested.length} YC companies\n` +
-                `💎 Portfolio value: $${portfolioValue}B\n` +
-                `📈 ROI: ${roi >= 1000 ? Math.round(roi/1000) + 'K' : roi}x\n` +
-                `😱 Passed on: $${missedValue}B\n\n` +
-                `Can you beat my returns?\n` +
-                `${window.location.href}\n\n` +
-                `via @FounderVoice`;
+            const text = `🎰 Pitch Roulette Results\n\n💰 $10M fund → ${invested.length} investments\n💎 Portfolio: $${portfolioVal}B\n📈 ROI: ${roiStr}x\n😱 Passed on: $${missedVal}B\n\nCan you beat me?\n${window.location.href}`;
             
-            if (navigator.share) {
-                navigator.share({ text, url: window.location.href });
-            } else {
-                navigator.clipboard.writeText(text);
-                alert('Results copied to clipboard!');
-            }
+            if (navigator.share) navigator.share({ text, url: window.location.href });
+            else { navigator.clipboard.writeText(text); alert('Copied to clipboard!'); }
         });
 
-        // Replay
         document.getElementById('replay-btn').addEventListener('click', initGame);
-
-        // Start game
         initGame();
     </script>
 </body>

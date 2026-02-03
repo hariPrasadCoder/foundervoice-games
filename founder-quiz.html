@@ -7,158 +7,444 @@
     <meta name="description" content="Take this quiz to discover which famous YC founder matches your personality!">
     <meta property="og:title" content="Which YC Founder Are You?">
     <meta property="og:description" content="I just found out which YC founder I am! Take the quiz to find yours.">
-    <meta property="og:type" content="website">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'fv-orange': '#FF6B35',
-                        'fv-warm': '#FF8C42',
-                        'fv-cream': '#FFF8F0',
-                        'fv-dark': '#1A1A1A',
-                    }
-                }
-            }
-        }
-    </script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; }
-        .gradient-bg {
-            background: linear-gradient(135deg, #FF6B35 0%, #FF8C42 50%, #FFB347 100%);
+        :root {
+            --fg-primary: #0D0D0D;
+            --fg-secondary: #525252;
+            --fg-muted: #8C8C8C;
+            --bg-primary: #FAFAFA;
+            --bg-card: #FFFFFF;
+            --accent: #E85D2B;
+            --accent-hover: #D14E1F;
+            --accent-subtle: #FEF3EF;
+            --border: #E5E5E5;
         }
-        .option-card {
-            transition: all 0.2s ease;
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--bg-primary);
+            color: var(--fg-primary);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
         }
-        .option-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(255, 107, 53, 0.15);
+        
+        h1, h2, h3, h4 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
         }
-        .option-card.selected {
-            border-color: #FF6B35;
-            background: #FFF8F0;
+        
+        .header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
         }
+        
+        .header-inner {
+            max-width: 640px;
+            margin: 0 auto;
+            padding: 14px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: var(--fg-primary);
+        }
+        
+        .logo-mark {
+            width: 32px;
+            height: 32px;
+            background: var(--accent);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            color: white;
+            font-size: 12px;
+        }
+        
+        .logo-text {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 600;
+            font-size: 16px;
+        }
+        
+        .header-link {
+            color: var(--fg-secondary);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+        }
+        
+        .header-link:hover { color: var(--accent); }
+        
+        main {
+            max-width: 560px;
+            margin: 0 auto;
+            padding: 32px 20px 60px;
+        }
+        
+        /* Progress */
+        .progress-section {
+            margin-bottom: 32px;
+        }
+        
+        .progress-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            color: var(--fg-muted);
+            margin-bottom: 10px;
+        }
+        
+        .progress-bar {
+            height: 6px;
+            background: var(--border);
+            border-radius: 100px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: var(--accent);
+            border-radius: 100px;
+            transition: width 0.5s ease;
+        }
+        
+        /* Question Card */
+        .question-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 32px 28px;
+            margin-bottom: 24px;
+            animation: fadeIn 0.4s ease;
+        }
+        
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        .fade-in {
-            animation: fadeIn 0.4s ease forwards;
+        
+        .question-text {
+            font-size: 22px;
+            text-align: center;
+            margin-bottom: 28px;
+            color: var(--fg-primary);
         }
-        @keyframes bounce {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
+        
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
         }
-        .bounce { animation: bounce 0.3s ease; }
+        
+        .option-btn {
+            width: 100%;
+            text-align: left;
+            padding: 16px 20px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            font-size: 15px;
+            color: var(--fg-primary);
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+        
+        .option-btn:hover {
+            border-color: var(--accent);
+            background: var(--accent-subtle);
+        }
+        
+        .option-btn.selected {
+            border-color: var(--accent);
+            background: var(--accent-subtle);
+            transform: scale(0.98);
+        }
+        
+        .hint {
+            text-align: center;
+            font-size: 13px;
+            color: var(--fg-muted);
+        }
+        
+        /* Results */
+        .results-container { display: none; }
+        .results-container.visible { display: block; }
+        .quiz-container.hidden { display: none; }
+        
+        .result-header {
+            background: var(--fg-primary);
+            border-radius: 20px 20px 0 0;
+            padding: 48px 28px;
+            text-align: center;
+            color: white;
+        }
+        
+        .result-emoji {
+            font-size: 72px;
+            margin-bottom: 20px;
+        }
+        
+        .result-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 8px;
+        }
+        
+        .result-name {
+            font-size: 36px;
+            margin-bottom: 8px;
+        }
+        
+        .result-company {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .result-body {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-top: none;
+            border-radius: 0 0 20px 20px;
+            padding: 32px 28px;
+        }
+        
+        .result-description {
+            font-size: 15px;
+            color: var(--fg-secondary);
+            line-height: 1.8;
+            margin-bottom: 28px;
+        }
+        
+        .result-section {
+            margin-bottom: 24px;
+        }
+        
+        .result-section h3 {
+            font-size: 14px;
+            margin-bottom: 12px;
+            color: var(--fg-primary);
+        }
+        
+        .traits {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        .trait-tag {
+            background: var(--accent-subtle);
+            color: var(--accent);
+            padding: 6px 14px;
+            border-radius: 100px;
+            font-size: 13px;
+            font-weight: 500;
+        }
+        
+        .quote {
+            border-left: 3px solid var(--accent);
+            padding-left: 20px;
+            font-style: italic;
+            color: var(--fg-secondary);
+            font-size: 15px;
+            line-height: 1.7;
+        }
+        
+        .stats-card {
+            background: var(--bg-primary);
+            border-radius: 12px;
+            padding: 20px;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+        
+        .stat-item {
+            font-size: 13px;
+        }
+        
+        .stat-item span {
+            color: var(--fg-muted);
+        }
+        
+        .stat-item strong {
+            color: var(--fg-primary);
+        }
+        
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 32px;
+        }
+        
+        .btn-primary {
+            width: 100%;
+            padding: 16px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+            text-decoration: none;
+            border: none;
+            font-family: inherit;
+        }
+        
+        .btn-primary.orange {
+            background: var(--accent);
+            color: white;
+        }
+        
+        .btn-primary.orange:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+        }
+        
+        .btn-primary.outline {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            color: var(--fg-primary);
+        }
+        
+        .btn-primary.outline:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+        
+        /* Footer */
+        .footer {
+            border-top: 1px solid var(--border);
+            padding: 32px 20px;
+            margin-top: 40px;
+        }
+        
+        .footer-inner {
+            max-width: 560px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .footer-link {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .footer-disclaimer {
+            font-size: 11px;
+            color: var(--fg-muted);
+            margin-top: 16px;
+            line-height: 1.6;
+        }
     </style>
 </head>
-<body class="bg-fv-cream min-h-screen">
-    <!-- Header -->
-    <header class="bg-white shadow-sm sticky top-0 z-50">
-        <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-            <a href="index.html" class="flex items-center gap-2">
-                <div class="w-8 h-8 rounded-lg gradient-bg flex items-center justify-center">
-                    <span class="text-white font-bold text-sm">FV</span>
-                </div>
-                <span class="font-bold text-lg text-fv-dark">FounderVoice</span>
+<body>
+    <header class="header">
+        <div class="header-inner">
+            <a href="index.html" class="logo">
+                <div class="logo-mark">FV</div>
+                <span class="logo-text">FounderVoice</span>
             </a>
-            <a href="index.html" class="text-fv-orange font-medium text-sm hover:underline">
-                ← All Games
-            </a>
+            <a href="index.html" class="header-link">← All Games</a>
         </div>
     </header>
 
-    <main class="max-w-2xl mx-auto px-4 py-8">
-        <!-- Quiz Container -->
-        <div id="quiz-container">
-            <!-- Progress -->
-            <div class="mb-6">
-                <div class="flex justify-between text-sm text-gray-600 mb-2">
+    <main>
+        <div id="quiz-container" class="quiz-container">
+            <div class="progress-section">
+                <div class="progress-row">
                     <span>Question <span id="current-q">1</span> of <span id="total-q">7</span></span>
-                    <span id="progress-text">Just getting started...</span>
+                    <span id="progress-text">Let's find out...</span>
                 </div>
-                <div class="h-2 bg-gray-200 rounded-full overflow-hidden">
-                    <div id="progress-bar" class="h-full gradient-bg transition-all duration-500" style="width: 14%"></div>
-                </div>
-            </div>
-
-            <!-- Question Card -->
-            <div id="question-card" class="bg-white rounded-2xl shadow-lg p-6 md:p-8 mb-6 fade-in">
-                <h2 id="question-text" class="text-xl md:text-2xl font-bold text-fv-dark mb-6 text-center">
-                    Loading question...
-                </h2>
-                
-                <div id="options-container" class="space-y-3">
-                    <!-- Options populated by JS -->
+                <div class="progress-bar">
+                    <div id="progress-bar" class="progress-fill" style="width: 14%"></div>
                 </div>
             </div>
 
-            <p class="text-center text-gray-400 text-sm">Select an answer to continue</p>
+            <div id="question-card" class="question-card">
+                <h2 id="question-text" class="question-text">Loading...</h2>
+                <div id="options" class="options"></div>
+            </div>
+            
+            <p class="hint">Select an answer to continue</p>
         </div>
 
-        <!-- Results Container (hidden) -->
-        <div id="results-container" class="hidden">
-            <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
-                <!-- Founder Header -->
-                <div class="gradient-bg p-8 text-center">
-                    <div id="result-emoji" class="text-7xl mb-4">🚀</div>
-                    <h2 class="text-white text-sm uppercase tracking-wider mb-2">You are most like</h2>
-                    <h1 id="result-name" class="text-3xl md:text-4xl font-bold text-white mb-2">Brian Chesky</h1>
-                    <p id="result-company" class="text-white/80 text-lg">Co-founder of Airbnb</p>
+        <div id="results-container" class="results-container">
+            <div class="result-header">
+                <div class="result-emoji" id="result-emoji">🚀</div>
+                <p class="result-label">You are most like</p>
+                <h1 class="result-name" id="result-name">Brian Chesky</h1>
+                <p class="result-company" id="result-company">Co-founder of Airbnb</p>
+            </div>
+            
+            <div class="result-body">
+                <p class="result-description" id="result-description"></p>
+                
+                <div class="result-section">
+                    <h3>Your Founder Traits</h3>
+                    <div class="traits" id="result-traits"></div>
                 </div>
                 
-                <!-- Founder Details -->
-                <div class="p-6 md:p-8">
-                    <div id="result-description" class="text-gray-700 mb-6 leading-relaxed">
-                        <!-- Filled by JS -->
-                    </div>
-                    
-                    <h3 class="font-bold text-fv-dark mb-3">Your Founder Traits:</h3>
-                    <div id="result-traits" class="flex flex-wrap gap-2 mb-6">
-                        <!-- Filled by JS -->
-                    </div>
-                    
-                    <h3 class="font-bold text-fv-dark mb-3">Famous Quote:</h3>
-                    <blockquote id="result-quote" class="border-l-4 border-fv-orange pl-4 italic text-gray-600 mb-6">
-                        <!-- Filled by JS -->
-                    </blockquote>
-                    
-                    <div class="bg-fv-cream rounded-xl p-4 mb-6">
-                        <h3 class="font-bold text-fv-dark mb-2">Company Stats:</h3>
-                        <div id="result-stats" class="grid grid-cols-2 gap-4 text-sm">
-                            <!-- Filled by JS -->
-                        </div>
+                <div class="result-section">
+                    <h3>Famous Quote</h3>
+                    <blockquote class="quote" id="result-quote"></blockquote>
+                </div>
+                
+                <div class="result-section">
+                    <h3>Company Stats</h3>
+                    <div class="stats-card">
+                        <div class="stats-grid" id="result-stats"></div>
                     </div>
                 </div>
             </div>
-
-            <!-- Share & Actions -->
-            <div class="mt-6 flex flex-col gap-3">
-                <button id="share-btn" class="w-full bg-fv-orange text-white font-semibold py-3 rounded-xl hover:bg-fv-warm transition-colors flex items-center justify-center gap-2">
-                    📤 Share Your Result
-                </button>
-                <button id="retake-btn" class="w-full bg-white text-fv-dark font-semibold py-3 rounded-xl border-2 border-gray-200 hover:border-fv-orange transition-colors">
-                    🔄 Retake Quiz
-                </button>
-                <a href="pitch-roulette.html" class="w-full bg-fv-cream text-fv-orange font-semibold py-3 rounded-xl text-center hover:bg-fv-orange hover:text-white transition-colors border-2 border-fv-orange">
-                    🎰 Play Pitch Roulette
-                </a>
+            
+            <div class="action-buttons">
+                <button id="share-btn" class="btn-primary orange">📤 Share Your Result</button>
+                <button id="retake-btn" class="btn-primary outline">🔄 Retake Quiz</button>
+                <a href="pitch-roulette.html" class="btn-primary outline">🎰 Play Pitch Roulette</a>
             </div>
         </div>
     </main>
 
-    <!-- Footer -->
-    <footer class="bg-fv-dark text-white py-8 px-4 mt-12">
-        <div class="max-w-lg mx-auto text-center">
-            <a href="https://foundervoice.online" class="text-fv-orange hover:underline font-medium">FounderVoice</a>
-            <p class="text-gray-500 text-sm mt-2">Founder data from public interviews and news sources</p>
+    <footer class="footer">
+        <div class="footer-inner">
+            <a href="https://foundervoice.online" class="footer-link">FounderVoice</a>
+            <p class="footer-disclaimer">
+                Not affiliated with Y Combinator. We're just fans celebrating the founders who inspire us. Founder data from public interviews and news sources.
+            </p>
         </div>
     </footer>
 
     <script>
-        // Quiz Questions - Shuffled on each load
         const questions = [
             {
                 question: "Your startup just got its first negative review. What's your reaction?",
@@ -183,7 +469,7 @@
                 options: [
                     { text: "Creating magical experiences that people remember", scores: { chesky: 3, houston: 1, collison: 1, xu: 1, ohanian: 2 } },
                     { text: "Solving hard technical problems elegantly", scores: { chesky: 1, houston: 3, collison: 3, xu: 1, ohanian: 1 } },
-                    { text: "Building something millions of people depend on daily", scores: { chesky: 1, houston: 2, collison: 2, xu: 3, ohanian: 2 } },
+                    { text: "Building something millions depend on daily", scores: { chesky: 1, houston: 2, collison: 2, xu: 3, ohanian: 2 } },
                     { text: "Empowering communities and giving people a voice", scores: { chesky: 1, houston: 1, collison: 1, xu: 1, ohanian: 3 } }
                 ]
             },
@@ -192,7 +478,7 @@
                 options: [
                     { text: "Sketch out both visions and prototype to see which feels right", scores: { chesky: 3, houston: 1, collison: 1, xu: 1, ohanian: 1 } },
                     { text: "Create a rigorous framework to evaluate both options", scores: { chesky: 1, houston: 3, collison: 2, xu: 2, ohanian: 1 } },
-                    { text: "Run quick experiments on both and let results decide", scores: { chesky: 1, houston: 1, collison: 3, xu: 2, ohanian: 2 } },
+                    { text: "Run quick experiments and let results decide", scores: { chesky: 1, houston: 1, collison: 3, xu: 2, ohanian: 2 } },
                     { text: "Survey users and let them help guide the decision", scores: { chesky: 1, houston: 1, collison: 1, xu: 1, ohanian: 3 } }
                 ]
             },
@@ -225,7 +511,6 @@
             }
         ];
 
-        // Founder Results
         const founders = {
             chesky: {
                 name: "Brian Chesky",
@@ -234,12 +519,7 @@
                 description: "You're a design-obsessed visionary who believes in creating magical, memorable experiences. Like Brian, you understand that the details matter and that great products come from deep empathy with users. You probably stayed in your own Airbnbs and experienced the product firsthand.",
                 traits: ["Design-Focused", "User Empathy", "Big Picture Thinker", "Storyteller", "Experience Designer"],
                 quote: "Build something 100 people love, not something 1 million people kind of like.",
-                stats: {
-                    "Founded": "2008",
-                    "YC Batch": "W08",
-                    "Peak Valuation": "$100B+",
-                    "Background": "RISD Design Graduate"
-                }
+                stats: { "Founded": "2008", "YC Batch": "W08", "Peak Valuation": "$100B+", "Background": "RISD Design Graduate" }
             },
             houston: {
                 name: "Drew Houston",
@@ -248,12 +528,7 @@
                 description: "You're methodical, persistent, and deeply technical. Like Drew, you solve your own problems and don't give up when things get hard. You turned down Steve Jobs and stayed focused on your vision. Your strength is building reliable, elegant solutions that just work.",
                 traits: ["Persistent", "Technical", "Problem-Solver", "Methodical", "Focused"],
                 quote: "Don't worry about failure; you only have to be right once.",
-                stats: {
-                    "Founded": "2007",
-                    "YC Batch": "S07",
-                    "IPO Valuation": "$12B",
-                    "Background": "MIT Computer Science"
-                }
+                stats: { "Founded": "2007", "YC Batch": "S07", "IPO Valuation": "$12B", "Background": "MIT Computer Science" }
             },
             collison: {
                 name: "Patrick Collison",
@@ -262,12 +537,7 @@
                 description: "You're an intellectual who moves at lightning speed. Like Patrick, you believe in hiring exceptional people and giving them autonomy. You're probably reading 50 books a year and thinking about how to make the complex simple. Developer experience is your religion.",
                 traits: ["Intellectual", "Fast-Moving", "Developer-Focused", "Ambitious", "Curious"],
                 quote: "Really, I think the thing that made the biggest difference was that we just moved really quickly.",
-                stats: {
-                    "Founded": "2010",
-                    "YC Batch": "S09",
-                    "Valuation": "$95B",
-                    "Background": "MIT Dropout (to start Stripe)"
-                }
+                stats: { "Founded": "2010", "YC Batch": "S09", "Valuation": "$95B", "Background": "MIT Dropout (to start Stripe)" }
             },
             xu: {
                 name: "Tony Xu",
@@ -276,12 +546,7 @@
                 description: "You're an execution machine with an immigrant hustle mentality. Like Tony, you're not afraid to do things that don't scale—you personally delivered orders to understand the business. You outwork and out-execute the competition through sheer determination.",
                 traits: ["Execution-Focused", "Hustler", "Hands-On", "Resilient", "Customer-Obsessed"],
                 quote: "We became DoorDash dashers ourselves to understand what the experience was like.",
-                stats: {
-                    "Founded": "2013",
-                    "YC Batch": "S13",
-                    "IPO Valuation": "$72B",
-                    "Background": "Stanford MBA, Square Alumni"
-                }
+                stats: { "Founded": "2013", "YC Batch": "S13", "IPO Valuation": "$72B", "Background": "Stanford MBA, Square Alumni" }
             },
             ohanian: {
                 name: "Alexis Ohanian",
@@ -290,167 +555,101 @@
                 description: "You're a community builder and natural marketer who understands the power of giving people a voice. Like Alexis, you believe in the wisdom of crowds and know how to rally people around ideas. You're probably equally comfortable pitching VCs or posting memes.",
                 traits: ["Community Builder", "Marketing Genius", "Connector", "Advocate", "Internet Native"],
                 quote: "We created a platform where people could be themselves, share ideas, and find their communities.",
-                stats: {
-                    "Founded": "2005",
-                    "YC Batch": "S05",
-                    "IPO Valuation": "$10B",
-                    "Background": "UVA History Major"
-                }
+                stats: { "Founded": "2005", "YC Batch": "S05", "IPO Valuation": "$10B", "Background": "UVA History Major" }
             }
         };
 
-        // Game state
-        let currentQuestion = 0;
-        let answers = [];
+        let currentQ = 0;
         let scores = { chesky: 0, houston: 0, collison: 0, xu: 0, ohanian: 0 };
-        let shuffledQuestions = [];
+        let shuffledQs = [];
 
-        // DOM elements
-        const quizContainer = document.getElementById('quiz-container');
-        const resultsContainer = document.getElementById('results-container');
-        const questionCard = document.getElementById('question-card');
-
-        // Shuffle array
-        function shuffle(array) {
-            const newArray = [...array];
-            for (let i = newArray.length - 1; i > 0; i--) {
+        function shuffle(arr) {
+            const a = [...arr];
+            for (let i = a.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
-                [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+                [a[i], a[j]] = [a[j], a[i]];
             }
-            return newArray;
+            return a;
         }
 
-        // Initialize quiz
         function initQuiz() {
-            shuffledQuestions = shuffle(questions);
-            // Also shuffle options within each question
-            shuffledQuestions = shuffledQuestions.map(q => ({
-                ...q,
-                options: shuffle(q.options)
-            }));
-            currentQuestion = 0;
-            answers = [];
+            shuffledQs = shuffle(questions).map(q => ({ ...q, options: shuffle(q.options) }));
+            currentQ = 0;
             scores = { chesky: 0, houston: 0, collison: 0, xu: 0, ohanian: 0 };
-            quizContainer.classList.remove('hidden');
-            resultsContainer.classList.add('hidden');
-            renderQuestion();
+            document.getElementById('quiz-container').classList.remove('hidden');
+            document.getElementById('results-container').classList.remove('visible');
+            renderQ();
         }
 
-        // Render current question
-        function renderQuestion() {
-            const q = shuffledQuestions[currentQuestion];
-            document.getElementById('current-q').textContent = currentQuestion + 1;
-            document.getElementById('total-q').textContent = shuffledQuestions.length;
-            document.getElementById('progress-bar').style.width = `${((currentQuestion + 1) / shuffledQuestions.length) * 100}%`;
+        function renderQ() {
+            const q = shuffledQs[currentQ];
+            document.getElementById('current-q').textContent = currentQ + 1;
+            document.getElementById('total-q').textContent = shuffledQs.length;
+            document.getElementById('progress-bar').style.width = `${((currentQ + 1) / shuffledQs.length) * 100}%`;
             
-            const progressTexts = ['Just getting started...', 'Keep going!', 'Halfway there!', 'You\'re on a roll!', 'Almost done!', 'Last few!', 'Final question!'];
-            document.getElementById('progress-text').textContent = progressTexts[Math.min(currentQuestion, progressTexts.length - 1)];
+            const texts = ['Let\'s find out...', 'Keep going!', 'Halfway there!', 'You\'re doing great!', 'Almost done!', 'Last few!', 'Final question!'];
+            document.getElementById('progress-text').textContent = texts[Math.min(currentQ, texts.length - 1)];
             
             document.getElementById('question-text').textContent = q.question;
             
-            const optionsContainer = document.getElementById('options-container');
-            optionsContainer.innerHTML = q.options.map((opt, i) => `
-                <button class="option-card w-full text-left p-4 bg-gray-50 rounded-xl border-2 border-gray-200 hover:border-fv-orange transition-all" data-index="${i}">
-                    <span class="font-medium text-fv-dark">${opt.text}</span>
-                </button>
-            `).join('');
+            const opts = document.getElementById('options');
+            opts.innerHTML = q.options.map((o, i) => `<button class="option-btn" data-i="${i}">${o.text}</button>`).join('');
             
-            // Add click handlers
-            optionsContainer.querySelectorAll('.option-card').forEach(btn => {
-                btn.addEventListener('click', () => selectAnswer(parseInt(btn.dataset.index)));
+            opts.querySelectorAll('.option-btn').forEach(btn => {
+                btn.addEventListener('click', () => selectAnswer(parseInt(btn.dataset.i)));
             });
             
-            // Animate in
-            questionCard.classList.remove('fade-in');
-            void questionCard.offsetWidth; // Trigger reflow
-            questionCard.classList.add('fade-in');
+            const card = document.getElementById('question-card');
+            card.style.animation = 'none';
+            card.offsetHeight;
+            card.style.animation = 'fadeIn 0.4s ease';
         }
 
-        // Handle answer selection
-        function selectAnswer(index) {
-            const q = shuffledQuestions[currentQuestion];
-            const selected = q.options[index];
+        function selectAnswer(i) {
+            const q = shuffledQs[currentQ];
+            const sel = q.options[i];
             
-            // Mark selected
-            document.querySelectorAll('.option-card').forEach((btn, i) => {
-                if (i === index) {
-                    btn.classList.add('selected', 'bounce');
-                } else {
-                    btn.classList.remove('selected');
-                }
+            document.querySelectorAll('.option-btn').forEach((b, idx) => {
+                b.classList.toggle('selected', idx === i);
             });
             
-            // Add scores
-            Object.entries(selected.scores).forEach(([founder, score]) => {
-                scores[founder] += score;
-            });
+            Object.entries(sel.scores).forEach(([f, s]) => scores[f] += s);
             
-            answers.push(index);
-            
-            // Move to next question after brief delay
             setTimeout(() => {
-                currentQuestion++;
-                if (currentQuestion >= shuffledQuestions.length) {
-                    showResults();
-                } else {
-                    renderQuestion();
-                }
-            }, 400);
+                currentQ++;
+                if (currentQ >= shuffledQs.length) showResults();
+                else renderQ();
+            }, 350);
         }
 
-        // Show results
         function showResults() {
-            quizContainer.classList.add('hidden');
-            resultsContainer.classList.remove('hidden');
+            document.getElementById('quiz-container').classList.add('hidden');
+            document.getElementById('results-container').classList.add('visible');
             
-            // Find highest scoring founder
             const winner = Object.entries(scores).reduce((a, b) => a[1] > b[1] ? a : b)[0];
-            const founder = founders[winner];
+            const f = founders[winner];
             
-            document.getElementById('result-emoji').textContent = founder.emoji;
-            document.getElementById('result-name').textContent = founder.name;
-            document.getElementById('result-company').textContent = founder.company;
-            document.getElementById('result-description').textContent = founder.description;
-            document.getElementById('result-quote').textContent = `"${founder.quote}"`;
+            document.getElementById('result-emoji').textContent = f.emoji;
+            document.getElementById('result-name').textContent = f.name;
+            document.getElementById('result-company').textContent = f.company;
+            document.getElementById('result-description').textContent = f.description;
+            document.getElementById('result-quote').textContent = `"${f.quote}"`;
             
-            // Traits
-            document.getElementById('result-traits').innerHTML = founder.traits.map(trait => 
-                `<span class="bg-fv-cream text-fv-orange px-3 py-1 rounded-full text-sm font-medium">${trait}</span>`
-            ).join('');
+            document.getElementById('result-traits').innerHTML = f.traits.map(t => `<span class="trait-tag">${t}</span>`).join('');
+            document.getElementById('result-stats').innerHTML = Object.entries(f.stats).map(([k, v]) => `<div class="stat-item"><span>${k}:</span> <strong>${v}</strong></div>`).join('');
             
-            // Stats
-            document.getElementById('result-stats').innerHTML = Object.entries(founder.stats).map(([key, value]) =>
-                `<div><span class="text-gray-500">${key}:</span> <strong>${value}</strong></div>`
-            ).join('');
-            
-            // Scroll to top
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // Share results
         document.getElementById('share-btn').addEventListener('click', () => {
             const winner = Object.entries(scores).reduce((a, b) => a[1] > b[1] ? a : b)[0];
-            const founder = founders[winner];
-            
-            const text = `🧠 I just took the "Which YC Founder Are You?" quiz!\n\n` +
-                `I got ${founder.emoji} ${founder.name} (${founder.company.split(' of ')[1] || founder.company})\n\n` +
-                `My traits: ${founder.traits.slice(0, 3).join(', ')}\n\n` +
-                `Which founder are you?\n` +
-                `${window.location.href}\n\n` +
-                `via @FounderVoice`;
-            
-            if (navigator.share) {
-                navigator.share({ text, url: window.location.href });
-            } else {
-                navigator.clipboard.writeText(text);
-                alert('Results copied to clipboard!');
-            }
+            const f = founders[winner];
+            const text = `🧠 Which YC Founder Are You?\n\nI got ${f.emoji} ${f.name}!\n\nTraits: ${f.traits.slice(0, 3).join(', ')}\n\nFind yours:\n${window.location.href}`;
+            if (navigator.share) navigator.share({ text, url: window.location.href });
+            else { navigator.clipboard.writeText(text); alert('Copied to clipboard!'); }
         });
 
-        // Retake quiz
         document.getElementById('retake-btn').addEventListener('click', initQuiz);
-
-        // Start quiz
         initQuiz();
     </script>
 </body>

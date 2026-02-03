@@ -4,176 +4,567 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FounderVoice Games - Would You Have Invested?</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'fv-orange': '#FF6B35',
-                        'fv-warm': '#FF8C42',
-                        'fv-cream': '#FFF8F0',
-                        'fv-dark': '#1A1A1A',
-                    }
-                }
+    <meta name="description" content="Test your investor instincts with real YC startup pitches. Fun games for founders and startup enthusiasts.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --fg-primary: #0D0D0D;
+            --fg-secondary: #525252;
+            --fg-muted: #8C8C8C;
+            --bg-primary: #FAFAFA;
+            --bg-card: #FFFFFF;
+            --accent: #E85D2B;
+            --accent-hover: #D14E1F;
+            --accent-subtle: #FEF3EF;
+            --border: #E5E5E5;
+            --border-hover: #D4D4D4;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--fg-primary);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        h1, h2, h3, h4 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+        }
+        
+        /* Header */
+        .header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .header-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 16px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--fg-primary);
+        }
+        
+        .logo-mark {
+            width: 36px;
+            height: 36px;
+            background: var(--accent);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            color: white;
+            font-size: 14px;
+        }
+        
+        .logo-text {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 600;
+            font-size: 18px;
+        }
+        
+        .header-link {
+            color: var(--fg-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        
+        .header-link:hover {
+            color: var(--accent);
+        }
+        
+        /* Hero */
+        .hero {
+            padding: 80px 24px 100px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(232, 93, 43, 0.08) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--accent-subtle);
+            color: var(--accent);
+            padding: 8px 16px;
+            border-radius: 100px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 32px;
+            border: 1px solid rgba(232, 93, 43, 0.2);
+        }
+        
+        .hero h1 {
+            font-size: clamp(40px, 8vw, 72px);
+            margin-bottom: 24px;
+            color: var(--fg-primary);
+        }
+        
+        .hero h1 span {
+            color: var(--accent);
+        }
+        
+        .hero-subtitle {
+            font-size: 18px;
+            color: var(--fg-secondary);
+            max-width: 540px;
+            margin: 0 auto 48px;
+        }
+        
+        .hero-features {
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+            flex-wrap: wrap;
+        }
+        
+        .hero-feature {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--fg-muted);
+            font-size: 14px;
+        }
+        
+        .hero-feature svg {
+            color: var(--accent);
+        }
+        
+        /* Games Grid */
+        .games-section {
+            padding: 0 24px 100px;
+        }
+        
+        .games-grid {
+            max-width: 900px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 24px;
+        }
+        
+        .game-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 40px;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .game-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--accent);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+        
+        .game-card:hover {
+            border-color: var(--border-hover);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+            transform: translateY(-4px);
+        }
+        
+        .game-card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .game-icon {
+            width: 64px;
+            height: 64px;
+            background: var(--accent-subtle);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            margin-bottom: 24px;
+        }
+        
+        .game-card h3 {
+            font-size: 24px;
+            margin-bottom: 12px;
+        }
+        
+        .game-card p {
+            color: var(--fg-secondary);
+            font-size: 15px;
+            margin-bottom: 24px;
+            line-height: 1.7;
+        }
+        
+        .game-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 24px;
+        }
+        
+        .game-tag {
+            background: var(--bg-primary);
+            color: var(--fg-muted);
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        .game-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--accent);
+            font-weight: 600;
+            font-size: 15px;
+        }
+        
+        .game-cta svg {
+            transition: transform 0.2s;
+        }
+        
+        .game-card:hover .game-cta svg {
+            transform: translateX(4px);
+        }
+        
+        /* Stats */
+        .stats-section {
+            padding: 80px 24px;
+            background: var(--fg-primary);
+            color: white;
+        }
+        
+        .stats-inner {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .stats-label {
+            text-align: center;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 40px;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 32px;
+            text-align: center;
+        }
+        
+        @media (max-width: 640px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
         }
-    </script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <style>
-        body { font-family: 'Inter', sans-serif; }
-        .gradient-bg {
-            background: linear-gradient(135deg, #FF6B35 0%, #FF8C42 50%, #FFB347 100%);
+        
+        .stat-value {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 4px;
         }
-        .card-hover {
-            transition: all 0.3s ease;
+        
+        .stat-label {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
         }
-        .card-hover:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(255, 107, 53, 0.2);
+        
+        /* CTA */
+        .cta-section {
+            padding: 100px 24px;
+            text-align: center;
+        }
+        
+        .cta-section h2 {
+            font-size: 32px;
+            margin-bottom: 16px;
+        }
+        
+        .cta-section p {
+            color: var(--fg-secondary);
+            margin-bottom: 32px;
+            max-width: 480px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--accent);
+            color: white;
+            padding: 14px 28px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            transition: all 0.2s;
+        }
+        
+        .cta-button:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(232, 93, 43, 0.3);
+        }
+        
+        /* Footer */
+        .footer {
+            border-top: 1px solid var(--border);
+            padding: 48px 24px;
+        }
+        
+        .footer-inner {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .footer-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 32px;
+            flex-wrap: wrap;
+            gap: 24px;
+        }
+        
+        .footer-links {
+            display: flex;
+            gap: 24px;
+        }
+        
+        .footer-links a {
+            color: var(--fg-muted);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+        
+        .footer-bottom {
+            padding-top: 32px;
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+        
+        .footer-credits {
+            font-size: 13px;
+            color: var(--fg-muted);
+            margin-bottom: 16px;
+        }
+        
+        .footer-credits a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        
+        .footer-disclaimer {
+            font-size: 12px;
+            color: var(--fg-muted);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+            padding: 16px;
+            background: var(--bg-primary);
+            border-radius: 8px;
         }
     </style>
 </head>
-<body class="bg-fv-cream min-h-screen">
+<body>
     <!-- Header -->
-    <header class="bg-white shadow-sm sticky top-0 z-50">
-        <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
-            <a href="https://foundervoice.online" class="flex items-center gap-2 group">
-                <div class="w-10 h-10 rounded-xl gradient-bg flex items-center justify-center">
-                    <span class="text-white font-bold text-lg">FV</span>
-                </div>
-                <span class="font-bold text-xl text-fv-dark group-hover:text-fv-orange transition-colors">FounderVoice</span>
+    <header class="header">
+        <div class="header-inner">
+            <a href="https://foundervoice.online" class="logo">
+                <div class="logo-mark">FV</div>
+                <span class="logo-text">FounderVoice</span>
             </a>
-            <a href="https://foundervoice.online" class="text-fv-orange font-medium hover:underline">
-                ← Back to Main Site
-            </a>
+            <a href="https://foundervoice.online" class="header-link">← Main Site</a>
         </div>
     </header>
 
-    <!-- Hero Section -->
-    <section class="gradient-bg py-20 px-4">
-        <div class="max-w-4xl mx-auto text-center">
-            <h1 class="text-4xl md:text-6xl font-extrabold text-white mb-6">
-                Would You Have<br>Invested? 🎰
-            </h1>
-            <p class="text-xl md:text-2xl text-white/90 mb-8 max-w-2xl mx-auto">
-                Fun games for YC founders and startup enthusiasts. Test your investor instincts and discover your founder personality.
-            </p>
-            <div class="flex flex-wrap justify-center gap-4">
-                <span class="bg-white/20 text-white px-4 py-2 rounded-full text-sm font-medium">
-                    🚀 No Sign-up Required
-                </span>
-                <span class="bg-white/20 text-white px-4 py-2 rounded-full text-sm font-medium">
-                    📱 Mobile Friendly
-                </span>
-                <span class="bg-white/20 text-white px-4 py-2 rounded-full text-sm font-medium">
-                    🎯 Real YC Data
-                </span>
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-badge">
+            <span>🎮</span>
+            <span>Free games for founders</span>
+        </div>
+        <h1>Would You Have<br><span>Invested?</span></h1>
+        <p class="hero-subtitle">
+            Test your investor instincts with real YC startup pitches. No sign-up required—just play.
+        </p>
+        <div class="hero-features">
+            <div class="hero-feature">
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>
+                <span>Real YC Data</span>
+            </div>
+            <div class="hero-feature">
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>
+                <span>No Sign-up</span>
+            </div>
+            <div class="hero-feature">
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>
+                <span>Mobile Friendly</span>
             </div>
         </div>
     </section>
 
-    <!-- Games Section -->
-    <section class="py-16 px-4">
-        <div class="max-w-6xl mx-auto">
-            <h2 class="text-3xl font-bold text-center text-fv-dark mb-12">Choose Your Game</h2>
-            
-            <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-                <!-- Pitch Roulette -->
-                <a href="pitch-roulette.html" class="card-hover bg-white rounded-2xl p-8 shadow-lg border border-gray-100 block">
-                    <div class="text-6xl mb-6">🎰</div>
-                    <h3 class="text-2xl font-bold text-fv-dark mb-3">Pitch Roulette</h3>
-                    <p class="text-gray-600 mb-6">
-                        Swipe left to pass or right to invest on real YC company pitches. Discover which billion-dollar companies you would have missed!
-                    </p>
-                    <div class="flex flex-wrap gap-2 mb-6">
-                        <span class="bg-fv-cream text-fv-orange text-sm px-3 py-1 rounded-full font-medium">Tinder-style</span>
-                        <span class="bg-fv-cream text-fv-orange text-sm px-3 py-1 rounded-full font-medium">Real Pitches</span>
-                        <span class="bg-fv-cream text-fv-orange text-sm px-3 py-1 rounded-full font-medium">20 Companies</span>
-                    </div>
-                    <div class="flex items-center text-fv-orange font-semibold">
-                        Play Now →
-                    </div>
-                </a>
+    <!-- Games -->
+    <section class="games-section">
+        <div class="games-grid">
+            <!-- Pitch Roulette -->
+            <a href="pitch-roulette.html" class="game-card">
+                <div class="game-icon">🎰</div>
+                <h3>Pitch Roulette</h3>
+                <p>
+                    You have $10M to invest. Swipe through real YC pitches and decide: invest or pass? See which billion-dollar companies you would've missed.
+                </p>
+                <div class="game-tags">
+                    <span class="game-tag">Swipe to Play</span>
+                    <span class="game-tag">$10M Budget</span>
+                    <span class="game-tag">20 Startups</span>
+                </div>
+                <span class="game-cta">
+                    Play Now
+                    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </span>
+            </a>
 
-                <!-- Founder Quiz -->
-                <a href="founder-quiz.html" class="card-hover bg-white rounded-2xl p-8 shadow-lg border border-gray-100 block">
-                    <div class="text-6xl mb-6">🧠</div>
-                    <h3 class="text-2xl font-bold text-fv-dark mb-3">Which YC Founder Are You?</h3>
-                    <p class="text-gray-600 mb-6">
-                        Answer 7 questions about your founder style and discover which famous YC founder matches your personality!
-                    </p>
-                    <div class="flex flex-wrap gap-2 mb-6">
-                        <span class="bg-fv-cream text-fv-orange text-sm px-3 py-1 rounded-full font-medium">Personality Quiz</span>
-                        <span class="bg-fv-cream text-fv-orange text-sm px-3 py-1 rounded-full font-medium">Shareable</span>
-                        <span class="bg-fv-cream text-fv-orange text-sm px-3 py-1 rounded-full font-medium">7 Questions</span>
-                    </div>
-                    <div class="flex items-center text-fv-orange font-semibold">
-                        Take Quiz →
-                    </div>
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Stats Section -->
-    <section class="bg-white py-16 px-4">
-        <div class="max-w-4xl mx-auto text-center">
-            <h2 class="text-2xl font-bold text-fv-dark mb-8">The YC Track Record</h2>
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-                <div>
-                    <div class="text-3xl md:text-4xl font-bold text-fv-orange">$600B+</div>
-                    <div class="text-gray-600 text-sm mt-1">Combined Valuation</div>
+            <!-- Founder Quiz -->
+            <a href="founder-quiz.html" class="game-card">
+                <div class="game-icon">🧠</div>
+                <h3>Which YC Founder Are You?</h3>
+                <p>
+                    Answer 7 questions about how you'd build a company. Discover which legendary YC founder matches your style.
+                </p>
+                <div class="game-tags">
+                    <span class="game-tag">Personality Quiz</span>
+                    <span class="game-tag">7 Questions</span>
+                    <span class="game-tag">Shareable</span>
                 </div>
-                <div>
-                    <div class="text-3xl md:text-4xl font-bold text-fv-orange">4,000+</div>
-                    <div class="text-gray-600 text-sm mt-1">Companies Funded</div>
-                </div>
-                <div>
-                    <div class="text-3xl md:text-4xl font-bold text-fv-orange">100+</div>
-                    <div class="text-gray-600 text-sm mt-1">Unicorns Created</div>
-                </div>
-                <div>
-                    <div class="text-3xl md:text-4xl font-bold text-fv-orange">12</div>
-                    <div class="text-gray-600 text-sm mt-1">Decacorns</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="py-16 px-4">
-        <div class="max-w-2xl mx-auto text-center">
-            <h2 class="text-2xl font-bold text-fv-dark mb-4">Building something yourself?</h2>
-            <p class="text-gray-600 mb-6">
-                FounderVoice helps founders tell their story. Get featured interviews, podcast appearances, and press coverage.
-            </p>
-            <a href="https://foundervoice.online" class="inline-block bg-fv-orange text-white font-semibold px-8 py-3 rounded-xl hover:bg-fv-warm transition-colors">
-                Visit FounderVoice →
+                <span class="game-cta">
+                    Take Quiz
+                    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </span>
             </a>
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="bg-fv-dark text-white py-12 px-4">
-        <div class="max-w-6xl mx-auto">
-            <div class="flex flex-col md:flex-row justify-between items-center gap-6">
-                <div class="flex items-center gap-2">
-                    <div class="w-8 h-8 rounded-lg gradient-bg flex items-center justify-center">
-                        <span class="text-white font-bold text-sm">FV</span>
-                    </div>
-                    <span class="font-bold text-lg">FounderVoice Games</span>
+    <!-- Stats -->
+    <section class="stats-section">
+        <div class="stats-inner">
+            <p class="stats-label">The YC Track Record</p>
+            <div class="stats-grid">
+                <div>
+                    <div class="stat-value">$600B+</div>
+                    <div class="stat-label">Combined Valuation</div>
                 </div>
-                <div class="flex gap-6 text-gray-400">
-                    <a href="pitch-roulette.html" class="hover:text-fv-orange transition-colors">Pitch Roulette</a>
-                    <a href="founder-quiz.html" class="hover:text-fv-orange transition-colors">Founder Quiz</a>
-                    <a href="https://foundervoice.online" class="hover:text-fv-orange transition-colors">Main Site</a>
+                <div>
+                    <div class="stat-value">4,000+</div>
+                    <div class="stat-label">Companies Funded</div>
+                </div>
+                <div>
+                    <div class="stat-value">100+</div>
+                    <div class="stat-label">Unicorns</div>
+                </div>
+                <div>
+                    <div class="stat-value">12</div>
+                    <div class="stat-label">Decacorns</div>
                 </div>
             </div>
-            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-500 text-sm">
-                <p>Built with ❤️ by <a href="https://foundervoice.online" class="text-fv-orange hover:underline">FounderVoice</a></p>
-                <p class="mt-2">Data sourced from public YC records, Crunchbase, and news sources.</p>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section">
+        <h2>Building something yourself?</h2>
+        <p>
+            FounderVoice helps founders tell their story and build leverage through media, community, and content.
+        </p>
+        <a href="https://foundervoice.online" class="cta-button">
+            Visit FounderVoice
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-top">
+                <a href="https://foundervoice.online" class="logo">
+                    <div class="logo-mark">FV</div>
+                    <span class="logo-text">FounderVoice Games</span>
+                </a>
+                <div class="footer-links">
+                    <a href="pitch-roulette.html">Pitch Roulette</a>
+                    <a href="founder-quiz.html">Founder Quiz</a>
+                    <a href="https://foundervoice.online">Main Site</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="footer-credits">
+                    Made with care by <a href="https://foundervoice.online">FounderVoice</a>
+                </p>
+                <p class="footer-disclaimer">
+                    <strong>Disclaimer:</strong> This site is not affiliated with, endorsed by, or connected to Y Combinator in any way. We're simply big fans of YC and the incredible companies they've backed. All company data is sourced from publicly available information. All trademarks belong to their respective owners.
+                </p>
             </div>
         </div>
     </footer>
