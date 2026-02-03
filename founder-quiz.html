@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Which YC Founder Are You? | FounderVoice</title>
+    <meta name="description" content="Take this quiz to discover which famous YC founder matches your personality!">
+    <meta property="og:title" content="Which YC Founder Are You?">
+    <meta property="og:description" content="I just found out which YC founder I am! Take the quiz to find yours.">
+    <meta property="og:type" content="website">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'fv-orange': '#FF6B35',
+                        'fv-warm': '#FF8C42',
+                        'fv-cream': '#FFF8F0',
+                        'fv-dark': '#1A1A1A',
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .gradient-bg {
+            background: linear-gradient(135deg, #FF6B35 0%, #FF8C42 50%, #FFB347 100%);
+        }
+        .option-card {
+            transition: all 0.2s ease;
+        }
+        .option-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 107, 53, 0.15);
+        }
+        .option-card.selected {
+            border-color: #FF6B35;
+            background: #FFF8F0;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in {
+            animation: fadeIn 0.4s ease forwards;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        .bounce { animation: bounce 0.3s ease; }
+    </style>
+</head>
+<body class="bg-fv-cream min-h-screen">
+    <!-- Header -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+            <a href="index.html" class="flex items-center gap-2">
+                <div class="w-8 h-8 rounded-lg gradient-bg flex items-center justify-center">
+                    <span class="text-white font-bold text-sm">FV</span>
+                </div>
+                <span class="font-bold text-lg text-fv-dark">FounderVoice</span>
+            </a>
+            <a href="index.html" class="text-fv-orange font-medium text-sm hover:underline">
+                ← All Games
+            </a>
+        </div>
+    </header>
+
+    <main class="max-w-2xl mx-auto px-4 py-8">
+        <!-- Quiz Container -->
+        <div id="quiz-container">
+            <!-- Progress -->
+            <div class="mb-6">
+                <div class="flex justify-between text-sm text-gray-600 mb-2">
+                    <span>Question <span id="current-q">1</span> of <span id="total-q">7</span></span>
+                    <span id="progress-text">Just getting started...</span>
+                </div>
+                <div class="h-2 bg-gray-200 rounded-full overflow-hidden">
+                    <div id="progress-bar" class="h-full gradient-bg transition-all duration-500" style="width: 14%"></div>
+                </div>
+            </div>
+
+            <!-- Question Card -->
+            <div id="question-card" class="bg-white rounded-2xl shadow-lg p-6 md:p-8 mb-6 fade-in">
+                <h2 id="question-text" class="text-xl md:text-2xl font-bold text-fv-dark mb-6 text-center">
+                    Loading question...
+                </h2>
+                
+                <div id="options-container" class="space-y-3">
+                    <!-- Options populated by JS -->
+                </div>
+            </div>
+
+            <p class="text-center text-gray-400 text-sm">Select an answer to continue</p>
+        </div>
+
+        <!-- Results Container (hidden) -->
+        <div id="results-container" class="hidden">
+            <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+                <!-- Founder Header -->
+                <div class="gradient-bg p-8 text-center">
+                    <div id="result-emoji" class="text-7xl mb-4">🚀</div>
+                    <h2 class="text-white text-sm uppercase tracking-wider mb-2">You are most like</h2>
+                    <h1 id="result-name" class="text-3xl md:text-4xl font-bold text-white mb-2">Brian Chesky</h1>
+                    <p id="result-company" class="text-white/80 text-lg">Co-founder of Airbnb</p>
+                </div>
+                
+                <!-- Founder Details -->
+                <div class="p-6 md:p-8">
+                    <div id="result-description" class="text-gray-700 mb-6 leading-relaxed">
+                        <!-- Filled by JS -->
+                    </div>
+                    
+                    <h3 class="font-bold text-fv-dark mb-3">Your Founder Traits:</h3>
+                    <div id="result-traits" class="flex flex-wrap gap-2 mb-6">
+                        <!-- Filled by JS -->
+                    </div>
+                    
+                    <h3 class="font-bold text-fv-dark mb-3">Famous Quote:</h3>
+                    <blockquote id="result-quote" class="border-l-4 border-fv-orange pl-4 italic text-gray-600 mb-6">
+                        <!-- Filled by JS -->
+                    </blockquote>
+                    
+                    <div class="bg-fv-cream rounded-xl p-4 mb-6">
+                        <h3 class="font-bold text-fv-dark mb-2">Company Stats:</h3>
+                        <div id="result-stats" class="grid grid-cols-2 gap-4 text-sm">
+                            <!-- Filled by JS -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Share & Actions -->
+            <div class="mt-6 flex flex-col gap-3">
+                <button id="share-btn" class="w-full bg-fv-orange text-white font-semibold py-3 rounded-xl hover:bg-fv-warm transition-colors flex items-center justify-center gap-2">
+                    📤 Share Your Result
+                </button>
+                <button id="retake-btn" class="w-full bg-white text-fv-dark font-semibold py-3 rounded-xl border-2 border-gray-200 hover:border-fv-orange transition-colors">
+                    🔄 Retake Quiz
+                </button>
+                <a href="pitch-roulette.html" class="w-full bg-fv-cream text-fv-orange font-semibold py-3 rounded-xl text-center hover:bg-fv-orange hover:text-white transition-colors border-2 border-fv-orange">
+                    🎰 Play Pitch Roulette
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-fv-dark text-white py-8 px-4 mt-12">
+        <div class="max-w-lg mx-auto text-center">
+            <a href="https://foundervoice.online" class="text-fv-orange hover:underline font-medium">FounderVoice</a>
+            <p class="text-gray-500 text-sm mt-2">Founder data from public interviews and news sources</p>
+        </div>
+    </footer>
+
+    <script>
+        // Quiz Questions - Shuffled on each load
+        const questions = [
+            {
+                question: "Your startup just got its first negative review. What's your reaction?",
+                options: [
+                    { text: "Reach out personally to understand and fix their experience", scores: { chesky: 3, houston: 1, collison: 1, xu: 1, ohanian: 1 } },
+                    { text: "Analyze the data to find systematic issues", scores: { chesky: 1, houston: 3, collison: 2, xu: 1, ohanian: 1 } },
+                    { text: "Ship a fix within 24 hours", scores: { chesky: 1, houston: 1, collison: 3, xu: 2, ohanian: 1 } },
+                    { text: "Turn it into a community discussion", scores: { chesky: 1, houston: 1, collison: 1, xu: 1, ohanian: 3 } }
+                ]
+            },
+            {
+                question: "How do you prefer to make big decisions?",
+                options: [
+                    { text: "Trust my design instincts and user empathy", scores: { chesky: 3, houston: 1, collison: 1, xu: 1, ohanian: 1 } },
+                    { text: "Build models and analyze all the data", scores: { chesky: 1, houston: 3, collison: 2, xu: 2, ohanian: 1 } },
+                    { text: "Move fast, learn from mistakes", scores: { chesky: 1, houston: 1, collison: 3, xu: 2, ohanian: 2 } },
+                    { text: "Talk to users and let the community guide me", scores: { chesky: 2, houston: 1, collison: 1, xu: 1, ohanian: 3 } }
+                ]
+            },
+            {
+                question: "What motivates you most as a founder?",
+                options: [
+                    { text: "Creating magical experiences that people remember", scores: { chesky: 3, houston: 1, collison: 1, xu: 1, ohanian: 2 } },
+                    { text: "Solving hard technical problems elegantly", scores: { chesky: 1, houston: 3, collison: 3, xu: 1, ohanian: 1 } },
+                    { text: "Building something millions of people depend on daily", scores: { chesky: 1, houston: 2, collison: 2, xu: 3, ohanian: 2 } },
+                    { text: "Empowering communities and giving people a voice", scores: { chesky: 1, houston: 1, collison: 1, xu: 1, ohanian: 3 } }
+                ]
+            },
+            {
+                question: "Your co-founder disagrees with your product direction. How do you handle it?",
+                options: [
+                    { text: "Sketch out both visions and prototype to see which feels right", scores: { chesky: 3, houston: 1, collison: 1, xu: 1, ohanian: 1 } },
+                    { text: "Create a rigorous framework to evaluate both options", scores: { chesky: 1, houston: 3, collison: 2, xu: 2, ohanian: 1 } },
+                    { text: "Run quick experiments on both and let results decide", scores: { chesky: 1, houston: 1, collison: 3, xu: 2, ohanian: 2 } },
+                    { text: "Survey users and let them help guide the decision", scores: { chesky: 1, houston: 1, collison: 1, xu: 1, ohanian: 3 } }
+                ]
+            },
+            {
+                question: "It's 11 PM and you have one hour of energy left. What do you do?",
+                options: [
+                    { text: "Review user research and think about the ideal experience", scores: { chesky: 3, houston: 1, collison: 1, xu: 1, ohanian: 1 } },
+                    { text: "Clear my inbox and organize tomorrow's priorities", scores: { chesky: 1, houston: 3, collison: 1, xu: 2, ohanian: 1 } },
+                    { text: "Write code or review PRs", scores: { chesky: 1, houston: 2, collison: 3, xu: 1, ohanian: 1 } },
+                    { text: "Check community feedback and respond to users", scores: { chesky: 2, houston: 1, collison: 1, xu: 2, ohanian: 3 } }
+                ]
+            },
+            {
+                question: "How would you describe your leadership style?",
+                options: [
+                    { text: "Lead by vision and inspire through design thinking", scores: { chesky: 3, houston: 1, collison: 1, xu: 1, ohanian: 1 } },
+                    { text: "Lead by example with disciplined execution", scores: { chesky: 1, houston: 3, collison: 2, xu: 3, ohanian: 1 } },
+                    { text: "Lead by empowerment—hire the best and get out of the way", scores: { chesky: 1, houston: 2, collison: 3, xu: 2, ohanian: 2 } },
+                    { text: "Lead by connecting people and building culture", scores: { chesky: 2, houston: 1, collison: 1, xu: 1, ohanian: 3 } }
+                ]
+            },
+            {
+                question: "What would you do if a competitor launched something similar?",
+                options: [
+                    { text: "Double down on brand and experience—make ours unforgettable", scores: { chesky: 3, houston: 1, collison: 1, xu: 1, ohanian: 2 } },
+                    { text: "Out-execute them with a better, more reliable product", scores: { chesky: 1, houston: 3, collison: 2, xu: 3, ohanian: 1 } },
+                    { text: "Move faster—ship the next 3 features before they ship 1", scores: { chesky: 1, houston: 1, collison: 3, xu: 2, ohanian: 1 } },
+                    { text: "Rally our community—they're our moat", scores: { chesky: 1, houston: 1, collison: 1, xu: 1, ohanian: 3 } }
+                ]
+            }
+        ];
+
+        // Founder Results
+        const founders = {
+            chesky: {
+                name: "Brian Chesky",
+                company: "Co-founder & CEO of Airbnb",
+                emoji: "🏠",
+                description: "You're a design-obsessed visionary who believes in creating magical, memorable experiences. Like Brian, you understand that the details matter and that great products come from deep empathy with users. You probably stayed in your own Airbnbs and experienced the product firsthand.",
+                traits: ["Design-Focused", "User Empathy", "Big Picture Thinker", "Storyteller", "Experience Designer"],
+                quote: "Build something 100 people love, not something 1 million people kind of like.",
+                stats: {
+                    "Founded": "2008",
+                    "YC Batch": "W08",
+                    "Peak Valuation": "$100B+",
+                    "Background": "RISD Design Graduate"
+                }
+            },
+            houston: {
+                name: "Drew Houston",
+                company: "Co-founder & CEO of Dropbox",
+                emoji: "📦",
+                description: "You're methodical, persistent, and deeply technical. Like Drew, you solve your own problems and don't give up when things get hard. You turned down Steve Jobs and stayed focused on your vision. Your strength is building reliable, elegant solutions that just work.",
+                traits: ["Persistent", "Technical", "Problem-Solver", "Methodical", "Focused"],
+                quote: "Don't worry about failure; you only have to be right once.",
+                stats: {
+                    "Founded": "2007",
+                    "YC Batch": "S07",
+                    "IPO Valuation": "$12B",
+                    "Background": "MIT Computer Science"
+                }
+            },
+            collison: {
+                name: "Patrick Collison",
+                company: "Co-founder & CEO of Stripe",
+                emoji: "💳",
+                description: "You're an intellectual who moves at lightning speed. Like Patrick, you believe in hiring exceptional people and giving them autonomy. You're probably reading 50 books a year and thinking about how to make the complex simple. Developer experience is your religion.",
+                traits: ["Intellectual", "Fast-Moving", "Developer-Focused", "Ambitious", "Curious"],
+                quote: "Really, I think the thing that made the biggest difference was that we just moved really quickly.",
+                stats: {
+                    "Founded": "2010",
+                    "YC Batch": "S09",
+                    "Valuation": "$95B",
+                    "Background": "MIT Dropout (to start Stripe)"
+                }
+            },
+            xu: {
+                name: "Tony Xu",
+                company: "Co-founder & CEO of DoorDash",
+                emoji: "🍔",
+                description: "You're an execution machine with an immigrant hustle mentality. Like Tony, you're not afraid to do things that don't scale—you personally delivered orders to understand the business. You outwork and out-execute the competition through sheer determination.",
+                traits: ["Execution-Focused", "Hustler", "Hands-On", "Resilient", "Customer-Obsessed"],
+                quote: "We became DoorDash dashers ourselves to understand what the experience was like.",
+                stats: {
+                    "Founded": "2013",
+                    "YC Batch": "S13",
+                    "IPO Valuation": "$72B",
+                    "Background": "Stanford MBA, Square Alumni"
+                }
+            },
+            ohanian: {
+                name: "Alexis Ohanian",
+                company: "Co-founder of Reddit",
+                emoji: "👽",
+                description: "You're a community builder and natural marketer who understands the power of giving people a voice. Like Alexis, you believe in the wisdom of crowds and know how to rally people around ideas. You're probably equally comfortable pitching VCs or posting memes.",
+                traits: ["Community Builder", "Marketing Genius", "Connector", "Advocate", "Internet Native"],
+                quote: "We created a platform where people could be themselves, share ideas, and find their communities.",
+                stats: {
+                    "Founded": "2005",
+                    "YC Batch": "S05",
+                    "IPO Valuation": "$10B",
+                    "Background": "UVA History Major"
+                }
+            }
+        };
+
+        // Game state
+        let currentQuestion = 0;
+        let answers = [];
+        let scores = { chesky: 0, houston: 0, collison: 0, xu: 0, ohanian: 0 };
+        let shuffledQuestions = [];
+
+        // DOM elements
+        const quizContainer = document.getElementById('quiz-container');
+        const resultsContainer = document.getElementById('results-container');
+        const questionCard = document.getElementById('question-card');
+
+        // Shuffle array
+        function shuffle(array) {
+            const newArray = [...array];
+            for (let i = newArray.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+            }
+            return newArray;
+        }
+
+        // Initialize quiz
+        function initQuiz() {
+            shuffledQuestions = shuffle(questions);
+            // Also shuffle options within each question
+            shuffledQuestions = shuffledQuestions.map(q => ({
+                ...q,
+                options: shuffle(q.options)
+            }));
+            currentQuestion = 0;
+            answers = [];
+            scores = { chesky: 0, houston: 0, collison: 0, xu: 0, ohanian: 0 };
+            quizContainer.classList.remove('hidden');
+            resultsContainer.classList.add('hidden');
+            renderQuestion();
+        }
+
+        // Render current question
+        function renderQuestion() {
+            const q = shuffledQuestions[currentQuestion];
+            document.getElementById('current-q').textContent = currentQuestion + 1;
+            document.getElementById('total-q').textContent = shuffledQuestions.length;
+            document.getElementById('progress-bar').style.width = `${((currentQuestion + 1) / shuffledQuestions.length) * 100}%`;
+            
+            const progressTexts = ['Just getting started...', 'Keep going!', 'Halfway there!', 'You\'re on a roll!', 'Almost done!', 'Last few!', 'Final question!'];
+            document.getElementById('progress-text').textContent = progressTexts[Math.min(currentQuestion, progressTexts.length - 1)];
+            
+            document.getElementById('question-text').textContent = q.question;
+            
+            const optionsContainer = document.getElementById('options-container');
+            optionsContainer.innerHTML = q.options.map((opt, i) => `
+                <button class="option-card w-full text-left p-4 bg-gray-50 rounded-xl border-2 border-gray-200 hover:border-fv-orange transition-all" data-index="${i}">
+                    <span class="font-medium text-fv-dark">${opt.text}</span>
+                </button>
+            `).join('');
+            
+            // Add click handlers
+            optionsContainer.querySelectorAll('.option-card').forEach(btn => {
+                btn.addEventListener('click', () => selectAnswer(parseInt(btn.dataset.index)));
+            });
+            
+            // Animate in
+            questionCard.classList.remove('fade-in');
+            void questionCard.offsetWidth; // Trigger reflow
+            questionCard.classList.add('fade-in');
+        }
+
+        // Handle answer selection
+        function selectAnswer(index) {
+            const q = shuffledQuestions[currentQuestion];
+            const selected = q.options[index];
+            
+            // Mark selected
+            document.querySelectorAll('.option-card').forEach((btn, i) => {
+                if (i === index) {
+                    btn.classList.add('selected', 'bounce');
+                } else {
+                    btn.classList.remove('selected');
+                }
+            });
+            
+            // Add scores
+            Object.entries(selected.scores).forEach(([founder, score]) => {
+                scores[founder] += score;
+            });
+            
+            answers.push(index);
+            
+            // Move to next question after brief delay
+            setTimeout(() => {
+                currentQuestion++;
+                if (currentQuestion >= shuffledQuestions.length) {
+                    showResults();
+                } else {
+                    renderQuestion();
+                }
+            }, 400);
+        }
+
+        // Show results
+        function showResults() {
+            quizContainer.classList.add('hidden');
+            resultsContainer.classList.remove('hidden');
+            
+            // Find highest scoring founder
+            const winner = Object.entries(scores).reduce((a, b) => a[1] > b[1] ? a : b)[0];
+            const founder = founders[winner];
+            
+            document.getElementById('result-emoji').textContent = founder.emoji;
+            document.getElementById('result-name').textContent = founder.name;
+            document.getElementById('result-company').textContent = founder.company;
+            document.getElementById('result-description').textContent = founder.description;
+            document.getElementById('result-quote').textContent = `"${founder.quote}"`;
+            
+            // Traits
+            document.getElementById('result-traits').innerHTML = founder.traits.map(trait => 
+                `<span class="bg-fv-cream text-fv-orange px-3 py-1 rounded-full text-sm font-medium">${trait}</span>`
+            ).join('');
+            
+            // Stats
+            document.getElementById('result-stats').innerHTML = Object.entries(founder.stats).map(([key, value]) =>
+                `<div><span class="text-gray-500">${key}:</span> <strong>${value}</strong></div>`
+            ).join('');
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Share results
+        document.getElementById('share-btn').addEventListener('click', () => {
+            const winner = Object.entries(scores).reduce((a, b) => a[1] > b[1] ? a : b)[0];
+            const founder = founders[winner];
+            
+            const text = `🧠 I just took the "Which YC Founder Are You?" quiz!\n\n` +
+                `I got ${founder.emoji} ${founder.name} (${founder.company.split(' of ')[1] || founder.company})\n\n` +
+                `My traits: ${founder.traits.slice(0, 3).join(', ')}\n\n` +
+                `Which founder are you?\n` +
+                `${window.location.href}\n\n` +
+                `via @FounderVoice`;
+            
+            if (navigator.share) {
+                navigator.share({ text, url: window.location.href });
+            } else {
+                navigator.clipboard.writeText(text);
+                alert('Results copied to clipboard!');
+            }
+        });
+
+        // Retake quiz
+        document.getElementById('retake-btn').addEventListener('click', initQuiz);
+
+        // Start quiz
+        initQuiz();
+    </script>
+</body>
+</html>

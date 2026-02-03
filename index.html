@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FounderVoice Games - Would You Have Invested?</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'fv-orange': '#FF6B35',
+                        'fv-warm': '#FF8C42',
+                        'fv-cream': '#FFF8F0',
+                        'fv-dark': '#1A1A1A',
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .gradient-bg {
+            background: linear-gradient(135deg, #FF6B35 0%, #FF8C42 50%, #FFB347 100%);
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(255, 107, 53, 0.2);
+        }
+    </style>
+</head>
+<body class="bg-fv-cream min-h-screen">
+    <!-- Header -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+            <a href="https://foundervoice.online" class="flex items-center gap-2 group">
+                <div class="w-10 h-10 rounded-xl gradient-bg flex items-center justify-center">
+                    <span class="text-white font-bold text-lg">FV</span>
+                </div>
+                <span class="font-bold text-xl text-fv-dark group-hover:text-fv-orange transition-colors">FounderVoice</span>
+            </a>
+            <a href="https://foundervoice.online" class="text-fv-orange font-medium hover:underline">
+                ← Back to Main Site
+            </a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="gradient-bg py-20 px-4">
+        <div class="max-w-4xl mx-auto text-center">
+            <h1 class="text-4xl md:text-6xl font-extrabold text-white mb-6">
+                Would You Have<br>Invested? 🎰
+            </h1>
+            <p class="text-xl md:text-2xl text-white/90 mb-8 max-w-2xl mx-auto">
+                Fun games for YC founders and startup enthusiasts. Test your investor instincts and discover your founder personality.
+            </p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <span class="bg-white/20 text-white px-4 py-2 rounded-full text-sm font-medium">
+                    🚀 No Sign-up Required
+                </span>
+                <span class="bg-white/20 text-white px-4 py-2 rounded-full text-sm font-medium">
+                    📱 Mobile Friendly
+                </span>
+                <span class="bg-white/20 text-white px-4 py-2 rounded-full text-sm font-medium">
+                    🎯 Real YC Data
+                </span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Games Section -->
+    <section class="py-16 px-4">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl font-bold text-center text-fv-dark mb-12">Choose Your Game</h2>
+            
+            <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                <!-- Pitch Roulette -->
+                <a href="pitch-roulette.html" class="card-hover bg-white rounded-2xl p-8 shadow-lg border border-gray-100 block">
+                    <div class="text-6xl mb-6">🎰</div>
+                    <h3 class="text-2xl font-bold text-fv-dark mb-3">Pitch Roulette</h3>
+                    <p class="text-gray-600 mb-6">
+                        Swipe left to pass or right to invest on real YC company pitches. Discover which billion-dollar companies you would have missed!
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-6">
+                        <span class="bg-fv-cream text-fv-orange text-sm px-3 py-1 rounded-full font-medium">Tinder-style</span>
+                        <span class="bg-fv-cream text-fv-orange text-sm px-3 py-1 rounded-full font-medium">Real Pitches</span>
+                        <span class="bg-fv-cream text-fv-orange text-sm px-3 py-1 rounded-full font-medium">20 Companies</span>
+                    </div>
+                    <div class="flex items-center text-fv-orange font-semibold">
+                        Play Now →
+                    </div>
+                </a>
+
+                <!-- Founder Quiz -->
+                <a href="founder-quiz.html" class="card-hover bg-white rounded-2xl p-8 shadow-lg border border-gray-100 block">
+                    <div class="text-6xl mb-6">🧠</div>
+                    <h3 class="text-2xl font-bold text-fv-dark mb-3">Which YC Founder Are You?</h3>
+                    <p class="text-gray-600 mb-6">
+                        Answer 7 questions about your founder style and discover which famous YC founder matches your personality!
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-6">
+                        <span class="bg-fv-cream text-fv-orange text-sm px-3 py-1 rounded-full font-medium">Personality Quiz</span>
+                        <span class="bg-fv-cream text-fv-orange text-sm px-3 py-1 rounded-full font-medium">Shareable</span>
+                        <span class="bg-fv-cream text-fv-orange text-sm px-3 py-1 rounded-full font-medium">7 Questions</span>
+                    </div>
+                    <div class="flex items-center text-fv-orange font-semibold">
+                        Take Quiz →
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="bg-white py-16 px-4">
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="text-2xl font-bold text-fv-dark mb-8">The YC Track Record</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <div>
+                    <div class="text-3xl md:text-4xl font-bold text-fv-orange">$600B+</div>
+                    <div class="text-gray-600 text-sm mt-1">Combined Valuation</div>
+                </div>
+                <div>
+                    <div class="text-3xl md:text-4xl font-bold text-fv-orange">4,000+</div>
+                    <div class="text-gray-600 text-sm mt-1">Companies Funded</div>
+                </div>
+                <div>
+                    <div class="text-3xl md:text-4xl font-bold text-fv-orange">100+</div>
+                    <div class="text-gray-600 text-sm mt-1">Unicorns Created</div>
+                </div>
+                <div>
+                    <div class="text-3xl md:text-4xl font-bold text-fv-orange">12</div>
+                    <div class="text-gray-600 text-sm mt-1">Decacorns</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-16 px-4">
+        <div class="max-w-2xl mx-auto text-center">
+            <h2 class="text-2xl font-bold text-fv-dark mb-4">Building something yourself?</h2>
+            <p class="text-gray-600 mb-6">
+                FounderVoice helps founders tell their story. Get featured interviews, podcast appearances, and press coverage.
+            </p>
+            <a href="https://foundervoice.online" class="inline-block bg-fv-orange text-white font-semibold px-8 py-3 rounded-xl hover:bg-fv-warm transition-colors">
+                Visit FounderVoice →
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-fv-dark text-white py-12 px-4">
+        <div class="max-w-6xl mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                <div class="flex items-center gap-2">
+                    <div class="w-8 h-8 rounded-lg gradient-bg flex items-center justify-center">
+                        <span class="text-white font-bold text-sm">FV</span>
+                    </div>
+                    <span class="font-bold text-lg">FounderVoice Games</span>
+                </div>
+                <div class="flex gap-6 text-gray-400">
+                    <a href="pitch-roulette.html" class="hover:text-fv-orange transition-colors">Pitch Roulette</a>
+                    <a href="founder-quiz.html" class="hover:text-fv-orange transition-colors">Founder Quiz</a>
+                    <a href="https://foundervoice.online" class="hover:text-fv-orange transition-colors">Main Site</a>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-500 text-sm">
+                <p>Built with ❤️ by <a href="https://foundervoice.online" class="text-fv-orange hover:underline">FounderVoice</a></p>
+                <p class="mt-2">Data sourced from public YC records, Crunchbase, and news sources.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
