@@ -81,6 +81,24 @@
     <main class="max-w-lg mx-auto px-4 py-8">
         <!-- Game Container -->
         <div id="game-container">
+            <!-- Budget Display -->
+            <div class="bg-white rounded-xl p-4 mb-6 shadow-sm border-2 border-fv-orange">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <div class="text-xs uppercase tracking-wider text-gray-400">Your Fund</div>
+                        <div class="text-2xl font-bold text-fv-dark">$<span id="budget-display">10</span>M</div>
+                    </div>
+                    <div class="text-right">
+                        <div class="text-xs uppercase tracking-wider text-gray-400">Per Investment</div>
+                        <div class="text-lg font-semibold text-gray-600">$500K</div>
+                    </div>
+                </div>
+                <div class="mt-3 h-3 bg-gray-200 rounded-full overflow-hidden">
+                    <div id="budget-bar" class="h-full bg-invest-green transition-all duration-300" style="width: 100%"></div>
+                </div>
+                <div class="text-xs text-gray-500 mt-1 text-center"><span id="investments-remaining">20</span> investments remaining</div>
+            </div>
+
             <!-- Progress -->
             <div class="mb-6">
                 <div class="flex justify-between text-sm text-gray-600 mb-2">
@@ -95,6 +113,11 @@
             <!-- Instructions -->
             <div id="instructions" class="text-center mb-6 text-gray-600">
                 <p class="text-sm">👈 Swipe left to <strong class="text-pass-red">PASS</strong> | Swipe right to <strong class="text-invest-green">INVEST</strong> 👉</p>
+            </div>
+            
+            <!-- Out of funds warning -->
+            <div id="out-of-funds" class="hidden bg-pass-red text-white text-center py-2 px-4 rounded-lg mb-4 font-semibold">
+                💸 Out of funds! You can only PASS now.
             </div>
 
             <!-- Card Container -->
@@ -139,7 +162,7 @@
             </div>
 
             <div class="bg-white rounded-2xl shadow-lg p-6 mb-6">
-                <div class="grid grid-cols-2 gap-4 text-center mb-6">
+                <div class="grid grid-cols-3 gap-4 text-center mb-6">
                     <div>
                         <div class="text-3xl font-bold text-invest-green" id="final-invested">0</div>
                         <div class="text-sm text-gray-500">Invested</div>
@@ -148,10 +171,24 @@
                         <div class="text-3xl font-bold text-pass-red" id="final-passed">0</div>
                         <div class="text-sm text-gray-500">Passed</div>
                     </div>
+                    <div>
+                        <div class="text-3xl font-bold text-fv-orange" id="final-budget">$0M</div>
+                        <div class="text-sm text-gray-500">Left Over</div>
+                    </div>
                 </div>
-                <div class="text-center border-t pt-4">
-                    <div class="text-sm text-gray-500">You passed on companies worth</div>
-                    <div class="text-4xl font-bold text-fv-orange" id="missed-value">$0B</div>
+                <div class="grid grid-cols-2 gap-4 text-center border-t pt-4">
+                    <div>
+                        <div class="text-sm text-gray-500">You passed on</div>
+                        <div class="text-3xl font-bold text-pass-red" id="missed-value">$0B</div>
+                    </div>
+                    <div>
+                        <div class="text-sm text-gray-500">Your portfolio worth</div>
+                        <div class="text-3xl font-bold text-invest-green" id="portfolio-value">$0B</div>
+                    </div>
+                </div>
+                <div class="text-center border-t pt-4 mt-4">
+                    <div class="text-sm text-gray-500">Return on Investment</div>
+                    <div class="text-4xl font-bold" id="roi-value">0x</div>
                 </div>
             </div>
 
@@ -381,6 +418,11 @@
         let isDragging = false;
         let startX = 0;
         let currentX = 0;
+        
+        // Budget system
+        const STARTING_BUDGET = 10; // $10M
+        const INVESTMENT_COST = 0.5; // $500K per investment
+        let budget = STARTING_BUDGET;
 
         // DOM elements
         const card = document.getElementById('pitch-card');
@@ -407,9 +449,57 @@
             currentIndex = 0;
             invested = [];
             passed = [];
+            budget = STARTING_BUDGET;
+            updateBudgetDisplay();
             updateCard();
             gameContainer.classList.remove('hidden');
             resultsContainer.classList.add('hidden');
+            document.getElementById('out-of-funds').classList.add('hidden');
+            
+            // Reset ROI color
+            const roiElement = document.getElementById('roi-value');
+            roiElement.classList.remove('text-invest-green', 'text-gray-400');
+        }
+        
+        // Update budget display
+        function updateBudgetDisplay() {
+            const budgetDisplay = document.getElementById('budget-display');
+            const budgetBar = document.getElementById('budget-bar');
+            const investmentsRemaining = document.getElementById('investments-remaining');
+            
+            budgetDisplay.textContent = budget.toFixed(1);
+            const percentRemaining = (budget / STARTING_BUDGET) * 100;
+            budgetBar.style.width = `${percentRemaining}%`;
+            
+            // Change color based on budget
+            if (percentRemaining <= 25) {
+                budgetBar.classList.remove('bg-invest-green', 'bg-yellow-400');
+                budgetBar.classList.add('bg-pass-red');
+            } else if (percentRemaining <= 50) {
+                budgetBar.classList.remove('bg-invest-green', 'bg-pass-red');
+                budgetBar.classList.add('bg-yellow-400');
+            } else {
+                budgetBar.classList.remove('bg-pass-red', 'bg-yellow-400');
+                budgetBar.classList.add('bg-invest-green');
+            }
+            
+            const remaining = Math.floor(budget / INVESTMENT_COST);
+            investmentsRemaining.textContent = remaining;
+            
+            // Update invest button state
+            const investBtn = document.getElementById('invest-btn');
+            const outOfFundsWarning = document.getElementById('out-of-funds');
+            if (budget < INVESTMENT_COST) {
+                investBtn.disabled = true;
+                investBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                investBtn.classList.remove('hover:bg-invest-green', 'hover:text-white');
+                outOfFundsWarning.classList.remove('hidden');
+            } else {
+                investBtn.disabled = false;
+                investBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                investBtn.classList.add('hover:bg-invest-green', 'hover:text-white');
+                outOfFundsWarning.classList.add('hidden');
+            }
         }
 
         // Update card display
@@ -439,8 +529,17 @@
                 passed.push(company);
                 card.classList.add('swiping-left');
             } else {
+                // Check if player has budget to invest
+                if (budget < INVESTMENT_COST) {
+                    // Shake the card and show "Out of funds!" message
+                    card.classList.add('shake');
+                    setTimeout(() => card.classList.remove('shake'), 300);
+                    return;
+                }
+                budget -= INVESTMENT_COST;
                 invested.push(company);
                 card.classList.add('swiping-right');
+                updateBudgetDisplay();
             }
 
             setTimeout(() => {
@@ -522,32 +621,56 @@
             resultsContainer.classList.remove('hidden');
             
             const missedValue = passed.reduce((sum, c) => sum + c.valuation, 0);
-            const investedValue = invested.reduce((sum, c) => sum + c.valuation, 0);
+            const portfolioValue = invested.reduce((sum, c) => sum + c.valuation, 0);
+            const amountInvested = invested.length * INVESTMENT_COST;
+            const roi = amountInvested > 0 ? (portfolioValue * 1000 / amountInvested) : 0; // Convert B to M for comparison
             
             document.getElementById('final-invested').textContent = invested.length;
             document.getElementById('final-passed').textContent = passed.length;
+            document.getElementById('final-budget').textContent = `$${budget.toFixed(1)}M`;
             document.getElementById('missed-value').textContent = `$${missedValue}B`;
+            document.getElementById('portfolio-value').textContent = `$${portfolioValue}B`;
+            
+            // Format ROI
+            const roiElement = document.getElementById('roi-value');
+            if (roi >= 1000) {
+                roiElement.textContent = `${Math.round(roi / 1000)}Kx`;
+                roiElement.classList.add('text-invest-green');
+            } else if (roi >= 1) {
+                roiElement.textContent = `${Math.round(roi)}x`;
+                roiElement.classList.add('text-invest-green');
+            } else {
+                roiElement.textContent = `0x`;
+                roiElement.classList.add('text-gray-400');
+            }
             
             // Set emoji and title based on performance
-            const passRate = passed.length / shuffledCompanies.length;
             let emoji, title, subtitle;
             
-            if (missedValue > 200) {
+            if (portfolioValue >= 300 && invested.length <= 10) {
+                emoji = '🏆';
+                title = 'Legendary VC Instincts!';
+                subtitle = `$${portfolioValue}B portfolio with just ${invested.length} bets. You're a unicorn hunter!`;
+            } else if (portfolioValue >= 200) {
+                emoji = '🚀';
+                title = 'Incredible Portfolio!';
+                subtitle = `$${portfolioValue}B in value. You picked some big winners!`;
+            } else if (missedValue > 200) {
                 emoji = '😱';
-                title = 'Legendary Misses!';
+                title = 'The Ones That Got Away!';
                 subtitle = `You passed on $${missedValue}B worth of companies!`;
             } else if (missedValue > 100) {
                 emoji = '😅';
-                title = 'Oops, Big Ones Got Away';
+                title = 'Oops, Big Ones Slipped By';
                 subtitle = `You missed some major winners there!`;
-            } else if (missedValue > 50) {
-                emoji = '🤔';
-                title = 'Not Bad, Not Great';
-                subtitle = `You have decent instincts, but some winners slipped by.`;
-            } else {
+            } else if (portfolioValue > missedValue) {
                 emoji = '🎯';
-                title = 'Incredible Investor Instincts!';
-                subtitle = `You would've caught most of the big ones!`;
+                title = 'Solid Investment Strategy!';
+                subtitle = `Your portfolio beat what you passed on. Nice picks!`;
+            } else {
+                emoji = '🤔';
+                title = 'Learning Experience';
+                subtitle = `Every VC has misses. Try again!`;
             }
             
             document.getElementById('results-emoji').textContent = emoji;
@@ -592,10 +715,17 @@
         // Share results
         document.getElementById('share-btn').addEventListener('click', () => {
             const missedValue = passed.reduce((sum, c) => sum + c.valuation, 0);
+            const portfolioValue = invested.reduce((sum, c) => sum + c.valuation, 0);
+            const amountInvested = invested.length * INVESTMENT_COST;
+            const roi = amountInvested > 0 ? Math.round((portfolioValue * 1000 / amountInvested)) : 0;
+            
             const text = `🎰 I just played Pitch Roulette!\n\n` +
-                `I invested in ${invested.length}/${shuffledCompanies.length} YC companies\n` +
-                `But I passed on $${missedValue}B worth of unicorns! 😱\n\n` +
-                `Can you beat my score?\n` +
+                `💰 Started with $10M fund\n` +
+                `📊 Invested in ${invested.length} YC companies\n` +
+                `💎 Portfolio value: $${portfolioValue}B\n` +
+                `📈 ROI: ${roi >= 1000 ? Math.round(roi/1000) + 'K' : roi}x\n` +
+                `😱 Passed on: $${missedValue}B\n\n` +
+                `Can you beat my returns?\n` +
                 `${window.location.href}\n\n` +
                 `via @FounderVoice`;
             
